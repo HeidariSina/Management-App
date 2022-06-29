@@ -47,9 +47,10 @@ class MainWindow (QMainWindow , Test):
         super(MainWindow , self).__init__()
         self.data = data
         self.setupUi(self)
-        self.employeeButton.clicked.connect(self.say)
-    def say(self):
-        print (data.employ)
+        self.employeeButton.clicked.connect(self.employ)
+    def employ(self):
+        self.MainText.setText("Employees Section")
+        
 
 class SecondWindow (QMainWindow , Employee):
     def __init__(self, data):
