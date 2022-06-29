@@ -6,7 +6,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication , QMainWindow
 
-Test = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
+Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
 
 class programData():
@@ -43,7 +43,7 @@ class Task () :
         self.persons = persons
 
 
-class MainWindow (QMainWindow , Test):
+class MainWindow (QMainWindow , Home):
     def __init__(self , data):
         super(MainWindow , self).__init__()
         self.data = data
@@ -94,8 +94,8 @@ class MainWindow (QMainWindow , Test):
         self.MainText.setAlignment(Qt.AlignCenter)
     def add(self) :
         if (self.addSignal == "employ"):
-            #code for employ
-            return
+            self.w = SecondWindow()
+            self.w.show()
         elif(self.addSignal == "task"):
             #code for employ
             return
@@ -104,8 +104,9 @@ class MainWindow (QMainWindow , Test):
 
         
 class SecondWindow (QMainWindow , Employee):
-    def __init__(self, data):
+    def __init__(self):
         super(SecondWindow, self).__init__()
+        self.setupUi(self)
 
 if __name__ == "__main__" :
     data = programData()
