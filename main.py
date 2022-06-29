@@ -3,6 +3,7 @@ from importlib.util import set_loader
 import os
 import sys
 from PyQt5 import uic
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication , QMainWindow
 
 Test = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
@@ -47,11 +48,19 @@ class MainWindow (QMainWindow , Test):
         super(MainWindow , self).__init__()
         self.data = data
         self.setupUi(self)
+        self.employeeButton.setStyleSheet("background-color : #1a161c ; color : white")
+        self.taskButton.setStyleSheet("background-color : #1a161c ; color : white")
         self.employeeButton.clicked.connect(self.employ)
+        self.taskButton.clicked.connect(self.task)
     def employ(self):
         self.MainText.setText("Employees Section")
+        self.MainText.setStyleSheet("color : white")
+        self.MainText.setAlignment(Qt.AlignCenter)
+    def task(self) :
+        self.MainText.setText("Tasks Section")
+        self.MainText.setStyleSheet("color : white")
+        self.MainText.setAlignment(Qt.AlignCenter)
         
-
 class SecondWindow (QMainWindow , Employee):
     def __init__(self, data):
         super(SecondWindow, self).__init__()
