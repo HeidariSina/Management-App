@@ -56,14 +56,13 @@ class MainWindow (QMainWindow , Test):
         self.MainText.setText("Employees Section")
         self.MainText.setStyleSheet("color : white")
         self.MainText.setAlignment(Qt.AlignCenter)
+        self.employeeButton.hide()
     def task(self) :
         self.MainText.setText("Tasks Section")
         self.MainText.setStyleSheet("color : white")
         self.MainText.setAlignment(Qt.AlignCenter)
+        self.taskButton.hide()
         
-class SecondWindow (QMainWindow , Employee):
-    def __init__(self, data):
-        super(SecondWindow, self).__init__()
 
 if __name__ == "__main__" :
     data = programData()
