@@ -15,9 +15,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
-        MainWindow.resize(1500, 930)
-        MainWindow.setMinimumSize(QtCore.QSize(1500, 930))
-        MainWindow.setMaximumSize(QtCore.QSize(1500, 930))
+        MainWindow.resize(600, 800)
+        MainWindow.setMinimumSize(QtCore.QSize(600, 800))
+        MainWindow.setMaximumSize(QtCore.QSize(600, 800))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(21, 23, 48))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -54,7 +54,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.MainText = QtWidgets.QTextBrowser(self.centralwidget)
-        self.MainText.setGeometry(QtCore.QRect(475, 90, 550, 52))
+        self.MainText.setGeometry(QtCore.QRect(202, 60, 195, 50))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(43, 39, 48))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -76,6 +76,12 @@ class Ui_MainWindow(object):
         self.MainText.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.MainText.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.MainText.setObjectName("MainText")
+        self.tableView = QtWidgets.QTableView(self.centralwidget)
+        self.tableView.setGeometry(QtCore.QRect(100, 150, 401, 541))
+        self.tableView.setObjectName("tableView")
+        self.submitButton = QtWidgets.QPushButton(self.centralwidget)
+        self.submitButton.setGeometry(QtCore.QRect(880, 550, 101, 31))
+        self.submitButton.setObjectName("submitButton")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -88,4 +94,5 @@ class Ui_MainWindow(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Segoe UI\'; font-size:20pt; font-weight:600; font-style:italic;\">\n"
-"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Employee Page</span></p></body></html>"))
+"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ffffff;\">Add Employee </span></p></body></html>"))
+        self.submitButton.setText(_translate("MainWindow", "Submit"))
