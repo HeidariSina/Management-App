@@ -6,7 +6,7 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication , QMainWindow
 
-Test = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
+Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
 
 class programData():
@@ -43,10 +43,11 @@ class Task () :
         self.persons = persons
 
 
-class MainWindow (QMainWindow , Test):
+class MainWindow (QMainWindow , Home):
     def __init__(self , data):
         super(MainWindow , self).__init__()
         self.data = data
+        self.addSignal = "none"
         self.setupUi(self)
         self.backButton.hide()
         self.addbutton.hide()
@@ -60,7 +61,9 @@ class MainWindow (QMainWindow , Test):
         self.employeeButton.clicked.connect(self.employ)
         self.taskButton.clicked.connect(self.task)
         self.backButton.clicked.connect(self.back)
+        self.addbutton.clicked.connect(self.add)
     def employ(self):
+        self.addSignal = "employ"
         self.backButton.show()
         self.addbutton.show()
         self.taskButton.hide()
@@ -69,8 +72,8 @@ class MainWindow (QMainWindow , Test):
         self.MainText.setText("Employees Section")
         self.MainText.setStyleSheet("color : white ; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
-        self.addbutton.clicked.connect(self.add_employee)
     def task(self) :
+        self.addSignal = "task"
         self.backButton.show()
         self.addbutton.show()
         self.taskButton.hide()
@@ -79,8 +82,8 @@ class MainWindow (QMainWindow , Test):
         self.MainText.setText("Tasks Section")
         self.MainText.setStyleSheet("color : white; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
-        self.addbutton.clicked.connect(self.add_task)
     def back(self):
+        self.addSignal = "none"
         self.addbutton.hide()
         self.backButton.hide()
         self.taskButton.show()
@@ -89,24 +92,22 @@ class MainWindow (QMainWindow , Test):
         self.MainText.setText("Main Menu")
         self.MainText.setStyleSheet("color : white; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
-    def add_employee(self):
-        self.addbutton.hide()
-        self.backButton.hide()
-        self.taskButton.hide()
-        self.employeeButton.hide()
-        self.MainText.setText("Add Employee")
-        self.MainText.setStyleSheet("color : white; border : none")
-        self.MainText.setAlignment(Qt.AlignCenter)
-        self.tableView.title("New Employee")
-    def add_task(self):
-        self.addbutton.hide()
-        self.backButton.hide()
-        self.taskButton.hide()
-        self.employeeButton.hide()
-        self.MainText.setText("Add Task")
-        self.MainText.setStyleSheet("color : white; border : none")
-        self.MainText.setAlignment(Qt.AlignCenter)
+    def add(self) :
+        if (self.addSignal == "employ"):
+            self.w = SecondWindow()
+            self.w.show()
+        elif(self.addSignal == "task"):
+            #code for employ
+            return
+        else :
+            return
 
+        
+class SecondWindow (QMainWindow , Employee):
+    def __init__(self):
+        super(SecondWindow, self).__init__()
+        self.setupUi(self)
+        self.MainText.setStyleSheet("color : white ; border : none")
 
 if __name__ == "__main__" :
     data = programData()
