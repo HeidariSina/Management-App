@@ -5,8 +5,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication , QMainWindow
 
-Test = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
-Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
+Test = uic.loadUiType(os.path.join(os.getcwd() , "Main.ui"))[0]
 
 class programData():
     def __init__(self) :
