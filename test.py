@@ -44,11 +44,13 @@ class Task () :
 class MainWindow (QMainWindow , Test):
     def __init__(self , data):
         super(MainWindow , self).__init__()
+        self.EmployeeText.hide()
         self.data = data
         self.setupUi(self)
         self.employeeButton.clicked.connect(self.employ)
     def employ(self):
-        self.MainText.setText("Employees Section")
+        self.MainText.hide()
+        self.EmployeeText.show()
 
 if __name__ == "__main__" :
     data = programData()
