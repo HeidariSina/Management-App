@@ -5,7 +5,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication , QMainWindow
 
-Main = uic.loadUiType(os.path.join(os.getcwd() , "Main.ui"))[0]
+Test = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
 
 class programData():
@@ -42,18 +42,14 @@ class Task () :
         self.persons = persons
 
 
-class MainWindow (QMainWindow , Main):
+class MainWindow (QMainWindow , Test):
     def __init__(self , data):
         super(MainWindow , self).__init__()
         self.data = data
         self.setupUi(self)
-        self.employeeButton.clicked.connect(self.say)
-    def say(self):
-        print (data.employ)
-    
-class SecondWindow (QMainWindow , Employee):
-    def __init__(self, data):
-        super(SecondWindow, self).__init__()
+        self.employeeButton.clicked.connect(self.employ)
+    def employ(self):
+        self.MainText.setText("Employees Section")
 
 if __name__ == "__main__" :
     data = programData()
