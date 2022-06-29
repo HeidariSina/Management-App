@@ -97,6 +97,7 @@ class MainWindow (QMainWindow , Test):
         self.MainText.setText("Add Employee")
         self.MainText.setStyleSheet("color : white; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
+        self.tableView.title("New Employee")
     def add_task(self):
         self.addbutton.hide()
         self.backButton.hide()
