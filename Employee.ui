@@ -757,7 +757,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="EnttranceTimeEdit">
+   <widget class="QLineEdit" name="EntranceTimeEdit">
     <property name="geometry">
      <rect>
       <x>20</x>

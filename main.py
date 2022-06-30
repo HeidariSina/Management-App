@@ -1,4 +1,5 @@
 from asyncio import Task
+from asyncio.windows_events import NULL
 from importlib.util import set_loader
 import os
 import sys
@@ -172,8 +173,40 @@ class SecondWindow (QMainWindow , Employee):
         self.submitbutton.clicked.connect(self.submit)
         
     def submit(self) :
-       print("submit")
-       print(self.NameEdit.text())
+        print("submit")
+        if(self.NameEdit.text() == "" or self.IDEdit.text() == "" or self.AgeEdit.text() == "" or self.EntranceTimeEdit.text() == "" or self.TasksEdit.text() == "" or self.FinishedTasksEdit.text() == "" or self.UnfinishedTasksEdit.text() == "" or(self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
+            print("error")
+            print(programData().employ)
+        else :
+            print(self.NameEdit.text())
+            print(self.IDEdit.text())
+            if self.MaleradioButton.isChecked():
+                print("Male")
+                self.sex = "Male"
+            elif self.FemaleradioButton.isChecked():
+                print("Female")
+                self.sex = "Female"
+            print(self.AgeEdit.text())
+            print(self.EntranceTimeEdit.text())
+            print(self.TasksEdit.text())
+            print(self.FinishedTasksEdit.text())
+            print(self.UnfinishedTasksEdit.text())
+            programData().addEmployee(self.NameEdit.text() ,self.IDEdit.text() , self.sex , self.AgeEdit.text() , self.EntranceTimeEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            print("employ: ", programData().employ)
+            
+            self.NameEdit.clear()
+            self.IDEdit.clear()
+            self.AgeEdit.clear()
+            self.EntranceTimeEdit.clear()
+            self.TasksEdit.clear()
+            self.FinishedTasksEdit.clear()
+            self.UnfinishedTasksEdit.clear()
+        
+            
+            
+            
+       
+       
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
