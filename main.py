@@ -196,6 +196,10 @@ class SecondWindow (QMainWindow , Employee):
             
             self.NameEdit.clear()
             self.IDEdit.clear()
+            if self.MaleradioButton.isChecked():
+                self.MaleradioButton.setChecked(False)
+            elif self.FemaleradioButton.isChecked():
+                self.FemaleradioButton.setChecked(False)
             self.AgeEdit.clear()
             self.EntranceTimeEdit.clear()
             self.TasksEdit.clear()
