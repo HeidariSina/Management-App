@@ -10,19 +10,19 @@
     <x>0</x>
     <y>0</y>
     <width>410</width>
-    <height>800</height>
+    <height>820</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>410</width>
-    <height>800</height>
+    <height>820</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>410</width>
-    <height>800</height>
+    <height>820</height>
    </size>
   </property>
   <property name="palette">
@@ -888,6 +888,32 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="maximum">
      <number>99</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SubmitpushButton">
+    <property name="geometry">
+     <rect>
+      <x>325</x>
+      <y>785</y>
+      <width>75</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Submit</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="CanclepushButton">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>785</y>
+      <width>75</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cancel</string>
     </property>
    </widget>
   </widget>
