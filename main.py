@@ -197,9 +197,14 @@ class SecondWindow (QMainWindow , Employee):
             self.NameEdit.clear()
             self.IDEdit.clear()
             if self.MaleradioButton.isChecked():
-                self.MaleradioButton.setChecked(False)
+                self.MaleradioButton.setAutoExclusive(False);
+                self.MaleradioButton.setChecked(False);
+                self.MaleradioButton.setAutoExclusive(True);
             elif self.FemaleradioButton.isChecked():
-                self.FemaleradioButton.setChecked(False)
+                self.FemaleradioButton.setAutoExclusive(False);
+                self.FemaleradioButton.setChecked(False);
+                self.FemaleradioButton.setAutoExclusive(True);
+                
             self.AgeEdit.clear()
             self.EntranceTimeEdit.clear()
             self.TasksEdit.clear()
