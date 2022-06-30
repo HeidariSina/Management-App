@@ -9,19 +9,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1500</width>
+    <width>1600</width>
     <height>930</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1500</width>
+    <width>1600</width>
     <height>930</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1500</width>
+    <width>1600</width>
     <height>930</height>
    </size>
   </property>
@@ -129,7 +129,7 @@
    <widget class="QTextBrowser" name="MainText">
     <property name="geometry">
      <rect>
-      <x>475</x>
+      <x>525</x>
       <y>30</y>
       <width>550</width>
       <height>52</height>
@@ -310,7 +310,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="taskButton">
     <property name="geometry">
      <rect>
-      <x>950</x>
+      <x>1050</x>
       <y>510</y>
       <width>350</width>
       <height>150</height>
@@ -426,7 +426,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="addbutton">
     <property name="geometry">
      <rect>
-      <x>1420</x>
+      <x>1520</x>
       <y>850</y>
       <width>61</width>
       <height>51</height>
@@ -484,7 +484,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>100</x>
       <y>140</y>
       <width>1400</width>
       <height>690</height>
@@ -494,7 +494,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextBrowser" name="emptyText">
     <property name="geometry">
      <rect>
-      <x>475</x>
+      <x>525</x>
       <y>450</y>
       <width>550</width>
       <height>52</height>
@@ -590,7 +590,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextBrowser" name="emptyText2">
     <property name="geometry">
      <rect>
-      <x>475</x>
+      <x>525</x>
       <y>550</y>
       <width>550</width>
       <height>52</height>

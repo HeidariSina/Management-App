@@ -2,9 +2,9 @@ from asyncio import Task
 from importlib.util import set_loader
 import os
 import sys
-from PyQt5 import uic
+from PyQt5 import uic 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  
+from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView 
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
@@ -22,10 +22,15 @@ class programData():
         task = Task(name ,startedTime , deadline , importance , milestone  ,persons)
         self.task.append(task)
 
-class Person () :
-    def __init__(self , name ,serialNumber , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks ) :
+class MileStone() :
+    def __init__(self , name , checked):
         self.name = name
-        self.serialNumber = serialNumber
+        self.checked = checked
+
+class Person () :
+    def __init__(self , name ,ID , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks ) :
+        self.name = name
+        self.ID = ID
         self.sex = sex
         self.age = age
         self.entranceTime = entranceTime
@@ -73,12 +78,21 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setText("Employees Section")
         self.MainText.setStyleSheet("color : white ; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
-        if (len(self.data.employ) != 0) :
+        if (len(self.data.employ) == 0) :
             self.tableWidget.show()
-            self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white")
-            self.tableWidget.setColumnCount(1)
-            self.tableWidget.setRowCount(1)
-            # self.tableWidget.setItem(1,1, QTableWidgetItem("sorry there is No Employee :("))
+            self.tableWidget.setStyleSheet("background-color : #1a161c ; color : black ; border : none")
+            self.tableWidget.setColumnCount(8)
+            self.tableWidget.setRowCount(8)
+            self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
+            self.tableWidget.setHorizontalHeaderItem( 1 , QTableWidgetItem("ID"))
+            self.tableWidget.setHorizontalHeaderItem( 2 , QTableWidgetItem("Sex"))
+            self.tableWidget.setHorizontalHeaderItem( 3 , QTableWidgetItem("Age"))
+            self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Entrance Time"))
+            self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Tasks"))
+            self.tableWidget.setHorizontalHeaderItem( 6 , QTableWidgetItem("Finished Tasks"))
+            self.tableWidget.setHorizontalHeaderItem( 7 , QTableWidgetItem("UnFinished Tasks"))
+            self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            self.tableWidget.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
         else :
             self.emptyText.show()
             self.emptyText2.show()
@@ -95,12 +109,18 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setText("Tasks Section")
         self.MainText.setStyleSheet("color : white; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
-        if (len(self.data.task) != 0) :
+        if (len(self.data.task) == 0) :
             self.tableWidget.show()
-            self.tableWidget.setStyleSheet("background-color : #1a161c ; color : black")
+            self.tableWidget.setStyleSheet("background-color : #1a161c ; color : black ;border : none")
             self.tableWidget.setColumnCount(6)
             self.tableWidget.setRowCount(8)
-            self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Number"))
+            self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
+            self.tableWidget.setHorizontalHeaderItem( 1 , QTableWidgetItem("Started Time"))
+            self.tableWidget.setHorizontalHeaderItem( 2 , QTableWidgetItem("Deadline"))
+            self.tableWidget.setHorizontalHeaderItem( 3 , QTableWidgetItem("Importance"))
+            self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Milestone"))
+            self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Persons"))
+            self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         else :
             self.emptyText.show()
             self.emptyText2.show()
