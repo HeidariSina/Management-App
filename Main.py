@@ -155,18 +155,31 @@ class SecondWindow (QMainWindow , Employee):
     def __init__(self):
         super(SecondWindow, self).__init__()
         self.setupUi(self)
+        ####################################################################################################
         self.MainText.setStyleSheet("color : white ; border : none")
         self.NameText.setStyleSheet("color : white ; border : none")
         self.IDText.setStyleSheet("color : white ; border : none")
         self.SexText.setStyleSheet("color : white ; border : none")
         self.AgeText.setStyleSheet("color : white ; border : none")
-        self.EntranceTimeText.setStyleSheet("color : white ; border : none")
+        self.EmployeeDateText.setStyleSheet("color : white ; border : none")
         self.TasksText.setStyleSheet("color : white ; border : none")
         self.FinishedTasksText.setStyleSheet("color : white ; border : none")
         self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
-        #self.NameEdit.textchanged.connect()
+        ####################################################################################################
+        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.IDspinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.AgespinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.dateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.TasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.FinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.UnfinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        ####################################################################################################
+        self.IDspinBox.setMaximum(10000000)
+        self.AgespinBox.setMaximum(110)
+        ####################################################################################################
+        
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
