@@ -737,7 +737,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;FinishedTasks:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="NameEdit_2">
+   <widget class="QLineEdit" name="IDEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -747,7 +747,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="NameEdit_3">
+   <widget class="QLineEdit" name="AgeEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -757,7 +757,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="NameEdit_4">
+   <widget class="QLineEdit" name="EnttranceTimeEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -767,7 +767,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="NameEdit_5">
+   <widget class="QLineEdit" name="TasksEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -777,7 +777,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="NameEdit_6">
+   <widget class="QLineEdit" name="FinishedTasksEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -856,7 +856,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;UnfinishedTasks:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="NameEdit_7">
+   <widget class="QLineEdit" name="UnfinishedTasksEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
