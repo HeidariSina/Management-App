@@ -166,6 +166,7 @@ class SecondWindow (QMainWindow , Employee):
         self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
+        #self.NameEdit.textchanged.connect()
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
