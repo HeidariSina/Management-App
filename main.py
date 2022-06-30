@@ -155,6 +155,13 @@ class SecondWindow (QMainWindow , Employee):
     def __init__(self):
         super(SecondWindow, self).__init__()
         self.setupUi(self)
+        self.MainText.setStyleSheet("color : white ; border : none")
+        self.NameText.setStyleSheet("color : white ; border : none")
+        self.SerialNumberText.setStyleSheet("color : white ; border : none")
+        self.SexText.setStyleSheet("color : white ; border : none")
+        self.AgeText.setStyleSheet("color : white ; border : none")
+        self.MaleradioButton.setStyleSheet("color : white")
+        self.FemaleradioButton.setStyleSheet("color : white")
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
