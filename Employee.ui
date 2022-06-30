@@ -9,19 +9,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>400</width>
     <height>800</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
+    <width>400</width>
     <height>800</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>600</width>
+    <width>400</width>
     <height>800</height>
    </size>
   </property>
@@ -129,7 +129,7 @@
    <widget class="QTextBrowser" name="MainText">
     <property name="geometry">
      <rect>
-      <x>202</x>
+      <x>102</x>
       <y>60</y>
       <width>195</width>
       <height>50</height>
