@@ -78,7 +78,7 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setText("Employees Section")
         self.MainText.setStyleSheet("color : white ; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
-        if (len(self.data.employ) == 0) :
+        if (len(self.data.employ) != 0) :
             self.tableWidget.show()
             self.tableWidget.setStyleSheet("background-color : #1a161c ; color : black ; border : none")
             self.tableWidget.setColumnCount(8)
@@ -109,7 +109,7 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setText("Tasks Section")
         self.MainText.setStyleSheet("color : white; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
-        if (len(self.data.task) == 0) :
+        if (len(self.data.task) != 0) :
             self.tableWidget.show()
             self.tableWidget.setStyleSheet("background-color : #1a161c ; color : black ;border : none")
             self.tableWidget.setColumnCount(6)
