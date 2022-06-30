@@ -157,11 +157,16 @@ class SecondWindow (QMainWindow , Employee):
         self.setupUi(self)
         self.MainText.setStyleSheet("color : white ; border : none")
         self.NameText.setStyleSheet("color : white ; border : none")
-        self.SerialNumberText.setStyleSheet("color : white ; border : none")
+        self.IDText.setStyleSheet("color : white ; border : none")
         self.SexText.setStyleSheet("color : white ; border : none")
         self.AgeText.setStyleSheet("color : white ; border : none")
+        self.EntranceTimeText.setStyleSheet("color : white ; border : none")
+        self.TasksText.setStyleSheet("color : white ; border : none")
+        self.FinishedTasksText.setStyleSheet("color : white ; border : none")
+        self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
+        #self.NameEdit.textchanged.connect()
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
