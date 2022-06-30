@@ -2,6 +2,7 @@ from asyncio import Task
 from importlib.util import set_loader
 import os
 import sys
+from time import process_time_ns
 from PyQt5 import uic 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView 
@@ -172,8 +173,7 @@ class SecondWindow (QMainWindow , Employee):
         
     def submit(self) :
        print("submit")
-   
-        #self.NameEdit.textchanged.connect()
+       print(self.NameEdit.text())
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
