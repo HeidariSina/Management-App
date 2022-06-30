@@ -879,6 +879,19 @@ p, li { white-space: pre-wrap; }
      <string>Submit</string>
     </property>
    </widget>
+   <widget class="QLabel" name="ErrorBox">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>760</y>
+      <width>111</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

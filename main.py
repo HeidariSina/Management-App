@@ -3,7 +3,7 @@ from asyncio.windows_events import NULL
 from importlib.util import set_loader
 import os
 import sys
-from time import process_time_ns
+from time import process_time_ns, sleep
 from PyQt5 import uic 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView 
@@ -158,6 +158,7 @@ class SecondWindow (QMainWindow , Employee):
     def __init__(self):
         super(SecondWindow, self).__init__()
         self.setupUi(self)
+        self.employ_data = programData()
         self.MainText.setStyleSheet("color : white ; border : none")
         self.NameText.setStyleSheet("color : white ; border : none")
         self.IDText.setStyleSheet("color : white ; border : none")
@@ -170,13 +171,15 @@ class SecondWindow (QMainWindow , Employee):
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
         self.submitbutton.setStyleSheet("color: white ; background-color: #1a161c")
+        self.ErrorBox.setStyleSheet("color: white ; background-color: #1a161c ; border: none")
         self.submitbutton.clicked.connect(self.submit)
         
     def submit(self) :
         print("submit")
         if(self.NameEdit.text() == "" or self.IDEdit.text() == "" or self.AgeEdit.text() == "" or self.EntranceTimeEdit.text() == "" or self.TasksEdit.text() == "" or self.FinishedTasksEdit.text() == "" or self.UnfinishedTasksEdit.text() == "" or(self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
             print("error")
-            print(programData().employ)
+            self.ErrorBox.setText("Empty Boxes!!!")
+            print(self.employ_data.employ)
         else :
             print(self.NameEdit.text())
             print(self.IDEdit.text())
@@ -191,8 +194,8 @@ class SecondWindow (QMainWindow , Employee):
             print(self.TasksEdit.text())
             print(self.FinishedTasksEdit.text())
             print(self.UnfinishedTasksEdit.text())
-            programData().addEmployee(self.NameEdit.text() ,self.IDEdit.text() , self.sex , self.AgeEdit.text() , self.EntranceTimeEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
-            print("employ: ", programData().employ)
+            self.employ_data.addEmployee(self.NameEdit.text() ,self.IDEdit.text() , self.sex , self.AgeEdit.text() , self.EntranceTimeEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            print("employ: ", self.employ_data.employ)
             
             self.NameEdit.clear()
             self.IDEdit.clear()
