@@ -149,6 +149,7 @@ class MainWindow (QMainWindow , Home):
             return
         else :
             return
+    
 
         
 class SecondWindow (QMainWindow , Employee):
@@ -166,6 +167,12 @@ class SecondWindow (QMainWindow , Employee):
         self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
+        self.submitbutton.setStyleSheet("color : white")
+        self.submitbutton.clicked.connect(self.submit)
+        
+    def submit(self) :
+       print("submit")
+   
         #self.NameEdit.textchanged.connect()
 
 if __name__ == "__main__" :
