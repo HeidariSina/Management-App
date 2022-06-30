@@ -167,7 +167,7 @@ class SecondWindow (QMainWindow , Employee):
         self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
-        self.submitbutton.setStyleSheet("color : white")
+        self.submitbutton.setStyleSheet("color: white ; background-color: #1a161c")
         self.submitbutton.clicked.connect(self.submit)
         
     def submit(self) :
