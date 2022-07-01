@@ -90,7 +90,15 @@ class MainWindow (QMainWindow , Home):
             self.tableWidget.setHorizontalHeaderItem( 6 , QTableWidgetItem("Finished Tasks"))
             self.tableWidget.setHorizontalHeaderItem( 7 , QTableWidgetItem("UnFinished Tasks"))
             self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-            self.tableWidget.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            self.tableWidget.verticalHeader().setDefaultSectionSize(85)
+            i = 1
+            j = 0
+            for emploees in self.data.employ :
+                for data in emploees :
+                    self.tableWidget.setItem(i , j , QTableWidgetItem(data))
+                    j = j + 1
+                j = 0 
+                i = i + 1
         else :
             self.emptyText.show()
             self.emptyText2.show()
@@ -111,7 +119,7 @@ class MainWindow (QMainWindow , Home):
             self.tableWidget.show()
             self.tableWidget.setStyleSheet("background-color : #1a161c ; color : black ;border : none")
             self.tableWidget.setColumnCount(6)
-            self.tableWidget.setRowCount(8)
+            self.tableWidget.setRowCount(len(self.data.task))
             self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
             self.tableWidget.setHorizontalHeaderItem( 1 , QTableWidgetItem("Started Time"))
             self.tableWidget.setHorizontalHeaderItem( 2 , QTableWidgetItem("Deadline"))
@@ -119,6 +127,17 @@ class MainWindow (QMainWindow , Home):
             self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Milestone"))
             self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Persons"))
             self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            self.tableWidget.verticalHeader().setDefaultSectionSize(85)
+            i = 1
+            j = 0
+            for tasks in self.data.task :
+                for data in tasks :
+                    self.tableWidget.setItem(i , j , QTableWidgetItem(data))
+                    j = j + 1
+                j = 0 
+                i = i + 1
+
+
         else :
             self.emptyText.show()
             self.emptyText2.show()
