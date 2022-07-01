@@ -327,7 +327,7 @@ class EmployeeWindow (QMainWindow , Employee):
             self.close()
 
 class TaskWindow (QMainWindow , Tasks):
-    def __init__(self , MainWindow):
+    def __init__(self , MainWindow , inde):
         super(TaskWindow, self).__init__()
         self.setupUi(self)
         self.MainWindow = MainWindow
@@ -382,6 +382,14 @@ class TaskWindow (QMainWindow , Tasks):
         self.DeadLinedateEdit.setCalendarWidget(y)
         self.CanclepushButton.clicked.connect(self.close)
         self.SubmitpushButton.clicked.connect(self.submit)
+
+        if (inde != "none") :  
+            self.NameEdit.setValue(MainWindow.data.task[inde].name)
+            self.StartedTimedateEdit.setValue(MainWindow.data.task[inde].startedTime)
+            self.DeadLinedateEdit.setValue(MainWindow.data.task[inde].deadline)
+            self.ImportanceEdit.setValue(MainWindow.data.task[inde].importance)
+            self.MilestoneEdit.setValue(MainWindow.data.task[inde].milestone)
+            self.PersonsEdit.setValue(MainWindow.data.task[inde].persons)
 
     def submit(self) :
         flag = 0
