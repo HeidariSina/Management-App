@@ -258,9 +258,6 @@ class EmployeeWindow (QMainWindow , Employee):
         y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
         self.dateEdit.setCalendarWidget(y)
 
-        # mehdi injaro bekhon Bara to zadam ino
-        
-        ####################################################################################################
         self.submitbutton.setStyleSheet("color: white ; background-color: #1a161c")
         self.ErrorBox.setStyleSheet("color: white ; background-color: #1a161c ; border: none")
         self.submitbutton.clicked.connect(self.submit)
@@ -278,25 +275,10 @@ class EmployeeWindow (QMainWindow , Employee):
             elif self.FemaleradioButton.isChecked():
                 self.sex = "Female"
             
-            #self.NameEdit.clear()
-            #self.IDspinBox.clear()
-            if self.MaleradioButton.isChecked():
-                self.MaleradioButton.setAutoExclusive(False);
-                self.MaleradioButton.setChecked(False);
-                self.MaleradioButton.setAutoExclusive(True);
-            elif self.FemaleradioButton.isChecked():
-                self.FemaleradioButton.setAutoExclusive(False);
-                self.FemaleradioButton.setChecked(False);
-                self.FemaleradioButton.setAutoExclusive(True);
-                
-            #self.AgespinBox.clear()
-            #self.dateEdit.clear()
-            #self.TasksEdit.clear()
-            #self.FinishedTasksEdit.clear()
-            #self.UnfinishedTasksEdit.clear()
             
             self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.text() , self.sex , self.AgespinBox.text() , self.dateEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
             self.MainWindow.employ()
+            self.close()
         
         
 
