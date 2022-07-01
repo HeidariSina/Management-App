@@ -893,11 +893,14 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="SubmitpushButton">
     <property name="geometry">
      <rect>
-      <x>325</x>
+      <x>205</x>
       <y>875</y>
-      <width>75</width>
+      <width>195</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Submit</string>
@@ -906,11 +909,14 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="CanclepushButton">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>10</x>
       <y>875</y>
-      <width>75</width>
+      <width>195</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Cancel</string>
