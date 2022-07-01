@@ -1,29 +1,13 @@
-from asyncio import Task
-from asyncio.windows_events import NULL
-from importlib.util import set_loader
+
+import datetime
 import os
 import sys
-from time import process_time_ns, sleep
 from PyQt5 import uic 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView 
+from PyQt5.QtCore import Qt  , QDate  
+from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView  , QCalendarWidget
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
-
-class programData():
-    def __init__(self) :
-        self.employ = []
-        self.task = []
-       
-
-    def addEmployee(self ,name ,serialNumber , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks):
-        person = Person(name ,serialNumber , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks)
-        self.employ.append(person)
-
-    def addTask(self , name ,startedTime , deadline , importance , milestone  ,persons):
-        task = Task(name ,startedTime , deadline , importance , milestone  ,persons)
-        self.task.append(task)
 
 class MileStone() :
     def __init__(self , name , checked):
@@ -31,12 +15,12 @@ class MileStone() :
         self.checked = checked
 
 class Person () :
-    def __init__(self , name ,ID , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks ) :
+    def __init__(self , name ,ID , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks ) :
         self.name = name
         self.ID = ID
         self.sex = sex
         self.age = age
-        self.entranceTime = entranceTime
+        self.joinDate = joinDate
         self.tasks = tasks
         self.finishedTasks = finishedTasks
         self.unfinishedTasks = unfinishedTasks
@@ -50,6 +34,18 @@ class Task () :
         self.milestone = milestone
         self.persons = persons
 
+class programData():
+    def __init__(self) :
+        self.employ = []
+        self.task = []
+
+    def addEmployee(self ,name ,ID , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks):
+        person = Person(name ,ID , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks)
+        self.employ.append(person)
+
+    def addTask(self , name ,startedTime , deadline , importance , milestone  ,persons):
+        task = Task(name ,startedTime , deadline , importance , milestone  ,persons)
+        self.task.append(task)
 
 class MainWindow (QMainWindow , Home):
     def __init__(self):
@@ -83,9 +79,11 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setAlignment(Qt.AlignCenter)
         if (len(self.data.employ) != 0) :
             self.tableWidget.show()
-            self.tableWidget.setStyleSheet("background-color : #1a161c ; color : black ; border : none")
+            self.emptyText.hide()
+            self.emptyText2.hide()
+            self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white ; border : none")
             self.tableWidget.setColumnCount(8)
-            self.tableWidget.setRowCount(8)
+            self.tableWidget.setRowCount(len(self.data.employ))
             self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
             self.tableWidget.setHorizontalHeaderItem( 1 , QTableWidgetItem("ID"))
             self.tableWidget.setHorizontalHeaderItem( 2 , QTableWidgetItem("Sex"))
@@ -94,9 +92,46 @@ class MainWindow (QMainWindow , Home):
             self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Tasks"))
             self.tableWidget.setHorizontalHeaderItem( 6 , QTableWidgetItem("Finished Tasks"))
             self.tableWidget.setHorizontalHeaderItem( 7 , QTableWidgetItem("UnFinished Tasks"))
+            self.tableWidget.horizontalHeader().setStyleSheet(" color : black")
+            self.tableWidget.verticalHeader().setStyleSheet(" color : black")
             self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-            self.tableWidget.verticalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            self.tableWidget.verticalHeader().setDefaultSectionSize(85)
+            i = 0
+            for emploees in self.data.employ :
+                name = QTableWidgetItem(emploees.name)
+                name.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 0 ,name )
+
+                id = QTableWidgetItem(str(emploees.ID))
+                id.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 1 ,id )
+
+                sex = QTableWidgetItem(emploees.sex)
+                sex.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 2 ,sex )
+
+                age = QTableWidgetItem(str(emploees.age))
+                age.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 3 ,age )
+
+                joinDate = QTableWidgetItem(emploees.joinDate)
+                joinDate.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 4 ,joinDate )
+
+                tasks = QTableWidgetItem(emploees.tasks)
+                tasks.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 5 ,tasks )
+
+                finishedTasks = QTableWidgetItem(emploees.finishedTasks)
+                finishedTasks.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 6 , finishedTasks )
+
+                unfinishedTasks = QTableWidgetItem(emploees.unfinishedTasks)
+                unfinishedTasks.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 7 ,unfinishedTasks )
+                i = i + 1
         else :
+            self.tableWidget.hide()
             self.emptyText.show()
             self.emptyText2.show()
             self.emptyText2.setStyleSheet("color : white ; border : none")
@@ -114,19 +149,50 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setAlignment(Qt.AlignCenter)
         if (len(self.data.task) != 0) :
             self.tableWidget.show()
+            self.emptyText.hide()
+            self.emptyText2.hide()
             self.tableWidget.setStyleSheet("background-color : #1a161c ; color : black ;border : none")
             self.tableWidget.setColumnCount(6)
-            self.tableWidget.setRowCount(8)
+            self.tableWidget.setRowCount(len(self.data.task))
             self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
             self.tableWidget.setHorizontalHeaderItem( 1 , QTableWidgetItem("Started Time"))
             self.tableWidget.setHorizontalHeaderItem( 2 , QTableWidgetItem("Deadline"))
             self.tableWidget.setHorizontalHeaderItem( 3 , QTableWidgetItem("Importance"))
             self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Milestone"))
             self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Persons"))
+            self.tableWidget.horizontalHeader().setStyleSheet(" color : black")
+            self.tableWidget.verticalHeader().setStyleSheet(" color : black")
             self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            self.tableWidget.verticalHeader().setDefaultSectionSize(85)
+            i = 0
+            for emploees in self.data.employ :
+                name = QTableWidgetItem(emploees.name)
+                name.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 0 ,name )
+
+                id = QTableWidgetItem(str(emploees.startedTime))
+                id.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 1 ,id )
+
+                sex = QTableWidgetItem(emploees.deadline)
+                sex.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 2 ,sex )
+
+                age = QTableWidgetItem(str(emploees.importance))
+                age.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 3 ,age )
+
+                joinDate = QTableWidgetItem(emploees.milestone)
+                joinDate.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 4 ,joinDate )
+
+                tasks = QTableWidgetItem(emploees.persons)
+                tasks.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 5 ,tasks )
         else :
             self.emptyText.show()
             self.emptyText2.show()
+            self.tableWidget.hide()
             self.emptyText2.setStyleSheet("color : white ; border : none")
             self.emptyText.setText("Sorry There is No Tasks :(")
             self.emptyText.setStyleSheet("color : white ; border : none")
@@ -145,62 +211,75 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setAlignment(Qt.AlignCenter)
     def add(self) :
         if (self.addSignal == "employ"):
-            self.w = SecondWindow()
+            self.w = EmployeeWindow(self)
             self.w.show()
         elif(self.addSignal == "task"):
             #code for employ
             return
         else :
             return
-    
 
-        
-class SecondWindow (QMainWindow , Employee):
-    def __init__(self):
-        super(SecondWindow, self).__init__()
+class EmployeeWindow (QMainWindow , Employee):
+    def __init__(self , MainWindow):
+        super(EmployeeWindow, self).__init__()
         self.setupUi(self)
-        self.employ_data = programData()
+        self.MainWindow = MainWindow
+        ####################################################################################################
         self.MainText.setStyleSheet("color : white ; border : none")
         self.NameText.setStyleSheet("color : white ; border : none")
         self.IDText.setStyleSheet("color : white ; border : none")
         self.SexText.setStyleSheet("color : white ; border : none")
         self.AgeText.setStyleSheet("color : white ; border : none")
-        self.EntranceTimeText.setStyleSheet("color : white ; border : none")
+        self.EmployeeDateText.setStyleSheet("color : white ; border : none")
         self.TasksText.setStyleSheet("color : white ; border : none")
         self.FinishedTasksText.setStyleSheet("color : white ; border : none")
         self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
+        ####################################################################################################
+        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.IDspinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.AgespinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.dateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.TasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.FinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.UnfinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        ####################################################################################################
+        self.IDspinBox.setMinimum(10000000)
+        self.IDspinBox.setMaximum(99999999)
+        self.AgespinBox.setMaximum(100)
+        self.AgespinBox.setMinimum(15)
+        self.dateEdit.setDisplayFormat("MMMM dd yyyy") 
+        self.dateEdit.setDisplayFormat("MMMM dd yyyy") 
+        x = datetime.datetime.now()
+        self.dateEdit.setDate(QDate(x.year , x.month , x.day))
+        self.dateEdit.setCalendarPopup(1)
+        y = QCalendarWidget()
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
+        self.dateEdit.setCalendarWidget(y)
+
+        # mehdi injaro bekhon Bara to zadam ino
+        
+        ####################################################################################################
         self.submitbutton.setStyleSheet("color: white ; background-color: #1a161c")
         self.ErrorBox.setStyleSheet("color: white ; background-color: #1a161c ; border: none")
         self.submitbutton.clicked.connect(self.submit)
         
+        
     def submit(self) :
-        print("submit")
-        if(self.NameEdit.text() == "" or self.IDEdit.text() == "" or self.AgeEdit.text() == "" or self.EntranceTimeEdit.text() == "" or self.TasksEdit.text() == "" or self.FinishedTasksEdit.text() == "" or self.UnfinishedTasksEdit.text() == "" or(self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
-            print("error")
+        
+        if(self.NameText == "" or self.IDText == "" or self.AgeText == "" or self.EmployeeDateText == "" or self.TasksText == "" or self.FinishedTasksText == "" or self.UnfinishedTasksText == "" or(self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
+            
             self.ErrorBox.setText("Empty Boxes!!!")
-            print(self.employ_data.employ)
+            
         else :
-            print(self.NameEdit.text())
-            print(self.IDEdit.text())
             if self.MaleradioButton.isChecked():
-                print("Male")
                 self.sex = "Male"
             elif self.FemaleradioButton.isChecked():
-                print("Female")
                 self.sex = "Female"
-            print(self.AgeEdit.text())
-            print(self.EntranceTimeEdit.text())
-            print(self.TasksEdit.text())
-            print(self.FinishedTasksEdit.text())
-            print(self.UnfinishedTasksEdit.text())
-            #self.employ_data.addEmployee(self.NameEdit.text() ,self.IDEdit.text() , self.sex , self.AgeEdit.text() , self.EntranceTimeEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
-            #print("employ: ", self.employ_data.employ)
-            person = Person(self.NameEdit.text() ,self.IDEdit.text() , self.sex , self.AgeEdit.text() , self.EntranceTimeEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
-           
-            self.NameEdit.clear()
-            self.IDEdit.clear()
+            
+            #self.NameEdit.clear()
+            #self.IDspinBox.clear()
             if self.MaleradioButton.isChecked():
                 self.MaleradioButton.setAutoExclusive(False);
                 self.MaleradioButton.setChecked(False);
@@ -210,20 +289,20 @@ class SecondWindow (QMainWindow , Employee):
                 self.FemaleradioButton.setChecked(False);
                 self.FemaleradioButton.setAutoExclusive(True);
                 
-            self.AgeEdit.clear()
-            self.EntranceTimeEdit.clear()
-            self.TasksEdit.clear()
-            self.FinishedTasksEdit.clear()
-            self.UnfinishedTasksEdit.clear()
+            #self.AgespinBox.clear()
+            #self.dateEdit.clear()
+            #self.TasksEdit.clear()
+            #self.FinishedTasksEdit.clear()
+            #self.UnfinishedTasksEdit.clear()
+            
+            self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.text() , self.sex , self.AgespinBox.text() , self.dateEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            self.MainWindow.employ()
         
-            
-            
-            
-       
-       
+        
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
     w = MainWindow()
     w.show()
     sys.exit(app.exec_())
+    
