@@ -1,3 +1,4 @@
+from asyncio import tasks
 import datetime
 import os
 import sys
@@ -7,6 +8,7 @@ from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHea
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
+Task = uic.loadUiType(os.path.join(os.getcwd() , "Task.ui"))[0]
 
 class MileStone() :
     def __init__(self , name , checked):
@@ -213,8 +215,8 @@ class MainWindow (QMainWindow , Home):
             self.w = EmployeeWindow(self)
             self.w.show()
         elif(self.addSignal == "task"):
-            #code for employ
-            return
+            self.w = TaskWindow(self)
+            self.w.show()
         else :
             return
 
@@ -278,11 +280,17 @@ class EmployeeWindow (QMainWindow , Employee):
         #self.MainWindow.data.addEmployee("sina" , 11000000 , "male" , 18 , "kjkdjsd" , "jhjkhd" , "djhfkhf" , "jshkahsjdasd")
         #self.MainWindow.employ()
         ####################################################################################################
-        #def send_data(self):
+        #def send_data(self) :
         #    self.close()
 
-        def close(self):
+        def close(self) :
             self.close()
+
+class TaskWindow (QMainWindow , Task):
+    def __init__(self , MainWindow):
+        super(TaskWindow, self).__init__()
+        self.setupUi(self)
+        self.MainWindow = MainWindow
 
 
 if __name__ == "__main__" :
