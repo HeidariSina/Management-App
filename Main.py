@@ -235,6 +235,9 @@ class EmployeeWindow (QMainWindow , Employee):
         self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
+        self.CanclepushButton.setStyleSheet("background-color : #1a161c ; color : white")
+        self.SubmitpushButton.setStyleSheet("background-color : #1a161c ; color : white")
+        self.AlertText_1.setStyleSheet("color : red ; border : none")
         ####################################################################################################
         self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
         self.IDspinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
@@ -248,7 +251,6 @@ class EmployeeWindow (QMainWindow , Employee):
         self.IDspinBox.setMaximum(99999999)
         self.AgespinBox.setMaximum(100)
         self.AgespinBox.setMinimum(15)
-        self.dateEdit.setDisplayFormat("MMMM dd yyyy") 
         self.dateEdit.setDisplayFormat("MMMM dd yyyy") 
         x = datetime.datetime.now()
         self.dateEdit.setDate(QDate(x.year , x.month , x.day))
