@@ -2,8 +2,9 @@ import datetime
 import os
 import sys
 from PyQt5 import uic 
-from PyQt5.QtCore import Qt  , QDate  
-from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView  , QCalendarWidget
+from PyQt5.QtCore import Qt  , QDate  , QPoint 
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView  , QCalendarWidget , QGraphicsDropShadowEffect
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
@@ -58,11 +59,20 @@ class MainWindow (QMainWindow , Home):
         self.tableWidget.hide()
         self.emptyText.hide()
         self.emptyText2.hide()
-        self.MainText.setStyleSheet("color : white ; border : none")
-        self.employeeButton.setStyleSheet("background-color : #1a161c ; color : white")
-        self.taskButton.setStyleSheet("background-color : #1a161c ; color : white")
-        self.backButton.setStyleSheet("background-color : #1a161c ; color : white")
-        self.addbutton.setStyleSheet("background-color : #1a161c ; color : white")
+        self.MainText.setStyleSheet("color : red ; border : none")
+        self.MainText2.setStyleSheet("color : #2ed3e6 ; border : none")
+        effect = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#2ed3e6"))
+        effect2 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#2ed3e6"))
+        effect3 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=10, color=QColor("#2ed3e6"))
+        effect4 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=10, color=QColor("#2ed3e6"))
+        self.employeeButton.setStyleSheet("background-color : #1a161c ; color : white ; border-radius : 20px ")
+        self.employeeButton.setGraphicsEffect(effect2)
+        self.taskButton.setStyleSheet("background-color : #1a161c ; color : white ; border-radius : 20px")
+        self.taskButton.setGraphicsEffect(effect)
+        self.backButton.setStyleSheet("background-color : #1a161c ; color : white ; border-radius : 10px")
+        self.backButton.setGraphicsEffect(effect4)
+        self.addbutton.setStyleSheet("background-color : #1a161c ; color : white ; border-radius : 10px")
+        self.addbutton.setGraphicsEffect(effect3)
         self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white")
         self.employeeButton.clicked.connect(self.employ)
         self.taskButton.clicked.connect(self.task)
@@ -71,6 +81,7 @@ class MainWindow (QMainWindow , Home):
     def employ(self):
         self.addSignal = "employ"
         self.backButton.show()
+        self.MainText2.hide()
         self.addbutton.show()
         self.taskButton.hide()
         self.employeeButton.hide()
@@ -151,6 +162,7 @@ class MainWindow (QMainWindow , Home):
     def task(self) :
         self.addSignal = "task"
         self.backButton.show()
+        self.MainText2.hide()
         self.addbutton.show()
         self.taskButton.hide()
         self.employeeButton.hide()
@@ -161,7 +173,7 @@ class MainWindow (QMainWindow , Home):
             self.tableWidget.show()
             self.emptyText.hide()
             self.emptyText2.hide()
-            self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white ;border : none")
+            self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white ;border : none ; ")
             self.tableWidget.setColumnCount(6)
             self.tableWidget.setRowCount(len(self.data.task))
             self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
@@ -210,6 +222,7 @@ class MainWindow (QMainWindow , Home):
     def back(self):
         self.addSignal = "none"
         self.emptyText.hide()
+        self.MainText2.show()
         self.emptyText2.hide()
         self.addbutton.hide()
         self.backButton.hide()
@@ -265,13 +278,13 @@ class EmployeeWindow (QMainWindow , Employee):
         self.AlertText_5.setStyleSheet("border : none ; color : red")
         self.AlertText_6.setStyleSheet("border : none ; color : red")
         ####################################################################################################
-        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.IDspinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.AgespinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.dateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.TasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.FinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.UnfinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.IDspinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.AgespinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.dateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.TasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.FinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.UnfinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
         ####################################################################################################
         self.AlertText_1.hide()
         self.AlertText_2.hide()
@@ -294,6 +307,13 @@ class EmployeeWindow (QMainWindow , Employee):
         self.dateEdit.setCalendarWidget(y)
         self.CanclepushButton.clicked.connect(self.close)
         self.SubmitpushButton.clicked.connect(self.submit)
+        effect1 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#111"))
+        effect2 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#111"))
+        self.SubmitpushButton.setStyleSheet("background-color : #034a21 ; color : white ; border-radius : 10px")
+        self.SubmitpushButton.setGraphicsEffect(effect1)
+        self.CanclepushButton.setStyleSheet("background-color : #91070f ; color : white ; border-radius : 10px")
+        self.CanclepushButton.setGraphicsEffect(effect2)
+
         if (inde != "none") :  
             self.NameEdit.setValue(MainWindow.data.employ[inde].name)
             self.IDspinBox.setValue(MainWindow.data.employ[inde].ID)
@@ -360,12 +380,12 @@ class TaskWindow (QMainWindow , Tasks):
         self.AlertText_5.setStyleSheet("border : none ; color : red")
         self.AlertText_6.setStyleSheet("border : none ; color : red")
         ####################################################################################################
-        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.StartedTimedateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.DeadLinedateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.ImportanceEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.MilestoneEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
-        self.PersonsEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ;border-radius : 5px ; padding-left : 10px")
+        self.StartedTimedateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.DeadLinedateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.ImportanceEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.MilestoneEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.PersonsEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
         ####################################################################################################
         self.AlertText_1.hide()
         self.AlertText_2.hide()
@@ -384,14 +404,21 @@ class TaskWindow (QMainWindow , Tasks):
         y = QCalendarWidget()
         y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
         self.StartedTimedateEdit.setCalendarWidget(y)
+        effect1 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#111"))
+        effect2 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#111"))
+        self.SubmitpushButton.setStyleSheet("background-color : #034a21 ; color : white ; border-radius : 10px")
+        self.CanclepushButton.setStyleSheet("background-color : #91070f ; color : white ; border-radius : 10px")
+        self.SubmitpushButton.setGraphicsEffect(effect1)
+        self.CanclepushButton.setGraphicsEffect(effect2)
 
         self.DeadLinedateEdit.setDisplayFormat("MMMM dd yyyy") 
         x = datetime.datetime.now()
         self.DeadLinedateEdit.setDate(QDate(x.year , x.month , x.day))
         self.DeadLinedateEdit.setCalendarPopup(1)
         y = QCalendarWidget()
-        y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none ")
         self.DeadLinedateEdit.setCalendarWidget(y)
+
         self.CanclepushButton.clicked.connect(self.close)
         self.SubmitpushButton.clicked.connect(self.submit)
 
