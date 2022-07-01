@@ -265,11 +265,12 @@ class EmployeeWindow (QMainWindow , Employee):
         
     def submit(self) :
         
-        if(self.NameText == "" or self.IDText == "" or self.AgeText == "" or self.EmployeeDateText == "" or self.TasksText == "" or self.FinishedTasksText == "" or self.UnfinishedTasksText == "" or(self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
+        if(self.NameEdit.text() == "" or self.IDspinBox.text() == "" or self.AgespinBox.text() == "" or self.dateEdit.text() == "" or self.TasksEdit.text() == "" or self.FinishedTasksEdit.text() == "" or self.UnfinishedTasksEdit.text() == "" or(self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
             
             self.ErrorBox.setText("Empty Boxes!!!")
             
         else :
+            self.ErrorBox.clear()
             if self.MaleradioButton.isChecked():
                 self.sex = "Male"
             elif self.FemaleradioButton.isChecked():
