@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHea
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
+Tasks = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
 
 class MileStone() :
     def __init__(self , name , checked):
@@ -257,10 +258,24 @@ class EmployeeWindow (QMainWindow , Employee):
         y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
         self.dateEdit.setCalendarWidget(y)
 
-        # mehdi injaro bekhon Bara to zadam ino
-        self.MainWindow.data.addEmployee("sina" , 11000000 , "male" , 18 , "kjkdjsd" , "jhjkhd" , "djhfkhf" , "jshkahsjdasd")
-        self.MainWindow.employ()
-        ####################################################################################################
+        def submit(self) :
+        
+            if(self.NameEdit.text() == "" or self.IDspinBox.text() == "" or self.AgespinBox.text() == "" or self.dateEdit.text() == "" or self.TasksEdit.text() == "" or self.FinishedTasksEdit.text() == "" or self.UnfinishedTasksEdit.text() == "" or(self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
+                self.ErrorBox.setText("Empty Boxes!!!")
+            else :
+                if self.MaleradioButton.isChecked():
+                    self.sex = "Male"
+                elif self.FemaleradioButton.isChecked():
+                    self.sex = "Female"
+                self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.text() , self.sex , self.AgespinBox.text() , self.dateEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+                self.MainWindow.employ()
+                self.close()
+
+class TaskWindow (QMainWindow , Tasks):
+    def __init__(self , MainWindow):
+        super(TaskWindow, self).__init__()
+        self.setupUi(self)
+        self.MainWindow = MainWindow
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
