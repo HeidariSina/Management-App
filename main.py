@@ -1,26 +1,12 @@
-from asyncio import Task
-from importlib.util import set_loader
+import datetime
 import os
 import sys
 from PyQt5 import uic 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView 
+from PyQt5.QtCore import Qt  , QDate  
+from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView  , QCalendarWidget
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
-
-class programData():
-    def __init__(self) :
-        self.employ = []
-        self.task = []
-
-    def addEmployee(self ,name ,serialNumber , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks):
-        person = Person(name ,serialNumber , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks)
-        self.employ.append(person)
-
-    def addTask(self , name ,startedTime , deadline , importance , milestone  ,persons):
-        task = Task(name ,startedTime , deadline , importance , milestone  ,persons)
-        self.task.append(task)
 
 class MileStone() :
     def __init__(self , name , checked):
@@ -28,12 +14,12 @@ class MileStone() :
         self.checked = checked
 
 class Person () :
-    def __init__(self , name ,ID , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks ) :
+    def __init__(self , name ,ID , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks ) :
         self.name = name
         self.ID = ID
         self.sex = sex
         self.age = age
-        self.entranceTime = entranceTime
+        self.joinDate = joinDate
         self.tasks = tasks
         self.finishedTasks = finishedTasks
         self.unfinishedTasks = unfinishedTasks
@@ -47,6 +33,18 @@ class Task () :
         self.milestone = milestone
         self.persons = persons
 
+class programData():
+    def __init__(self) :
+        self.employ = []
+        self.task = []
+
+    def addEmployee(self ,name ,serialNumber , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks):
+        person = Person(name ,serialNumber , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks)
+        self.employ.append(person)
+
+    def addTask(self , name ,startedTime , deadline , importance , milestone  ,persons):
+        task = Task(name ,startedTime , deadline , importance , milestone  ,persons)
+        self.task.append(task)
 
 class MainWindow (QMainWindow , Home):
     def __init__(self):
@@ -142,7 +140,7 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setAlignment(Qt.AlignCenter)
     def add(self) :
         if (self.addSignal == "employ"):
-            self.w = SecondWindow()
+            self.w = EmployeeWindow()
             self.w.show()
         elif(self.addSignal == "task"):
             #code for employ
@@ -150,23 +148,44 @@ class MainWindow (QMainWindow , Home):
         else :
             return
 
-        
-class SecondWindow (QMainWindow , Employee):
+class EmployeeWindow (QMainWindow , Employee):
     def __init__(self):
-        super(SecondWindow, self).__init__()
+        super(EmployeeWindow, self).__init__()
         self.setupUi(self)
+        ####################################################################################################
         self.MainText.setStyleSheet("color : white ; border : none")
         self.NameText.setStyleSheet("color : white ; border : none")
         self.IDText.setStyleSheet("color : white ; border : none")
         self.SexText.setStyleSheet("color : white ; border : none")
         self.AgeText.setStyleSheet("color : white ; border : none")
-        self.EntranceTimeText.setStyleSheet("color : white ; border : none")
+        self.EmployeeDateText.setStyleSheet("color : white ; border : none")
         self.TasksText.setStyleSheet("color : white ; border : none")
         self.FinishedTasksText.setStyleSheet("color : white ; border : none")
         self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
-        #self.NameEdit.textchanged.connect()
+        ####################################################################################################
+        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.IDspinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.AgespinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.dateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.TasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.FinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.UnfinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        ####################################################################################################
+        self.IDspinBox.setMinimum(10000000)
+        self.IDspinBox.setMaximum(99999999)
+        self.AgespinBox.setMaximum(100)
+        self.AgespinBox.setMinimum(15)
+        self.dateEdit.setDisplayFormat("MMMM dd yyyy") 
+        self.dateEdit.setDisplayFormat("MMMM dd yyyy") 
+        x = datetime.datetime.now()
+        self.dateEdit.setDate(QDate(x.year , x.month , x.day))
+        self.dateEdit.setCalendarPopup(1)
+        y = QCalendarWidget()
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
+        self.dateEdit.setCalendarWidget(y)
+        ####################################################################################################
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
