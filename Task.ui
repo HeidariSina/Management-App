@@ -293,7 +293,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;Name :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="IDText">
+   <widget class="QTextBrowser" name="StartedTimeText">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -362,7 +362,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;Started Time :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="SexText">
+   <widget class="QTextBrowser" name="DeadLineText">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -431,7 +431,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;Dead Line :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="AgeText">
+   <widget class="QTextBrowser" name="ImportanceText">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -500,7 +500,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;Importance :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="JointDateText">
+   <widget class="QTextBrowser" name="MilestoneText">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -569,7 +569,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;Milestone :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="TasksText">
+   <widget class="QTextBrowser" name="PersonsText">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -638,7 +638,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;Persons :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="TasksEdit">
+   <widget class="QLineEdit" name="PersonsEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -1094,7 +1094,7 @@ p, li { white-space: pre-wrap; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:400; font-style:normal; color:#ff0000;&quot;&gt;This Box Is Empty!!!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QDateEdit" name="dateEdit_2">
+   <widget class="QDateEdit" name="StartedTimedateEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -1104,7 +1104,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QDateEdit" name="dateEdit_3">
+   <widget class="QDateEdit" name="DeadLinedateEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -1114,7 +1114,7 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="NameEdit_2">
+   <widget class="QLineEdit" name="ImportanceEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -1130,7 +1130,7 @@ p, li { white-space: pre-wrap; }
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="NameEdit_3">
+   <widget class="QLineEdit" name="MilestoneEdit">
     <property name="geometry">
      <rect>
       <x>20</x>

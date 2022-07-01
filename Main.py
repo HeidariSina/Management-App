@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHea
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
-Task = uic.loadUiType(os.path.join(os.getcwd() , "Task.ui"))[0]
+Tasks = uic.loadUiType(os.path.join(os.getcwd() , "Task.ui"))[0]
 
 class MileStone() :
     def __init__(self , name , checked):
@@ -286,11 +286,61 @@ class EmployeeWindow (QMainWindow , Employee):
         def close(self) :
             self.close()
 
-class TaskWindow (QMainWindow , Task):
+class TaskWindow (QMainWindow , Tasks):
     def __init__(self , MainWindow):
         super(TaskWindow, self).__init__()
         self.setupUi(self)
         self.MainWindow = MainWindow
+        ####################################################################################################
+        self.MainText.setStyleSheet("color : white ; border : none")
+        self.NameText.setStyleSheet("color : white ; border : none")
+        self.StartedTimeText.setStyleSheet("color : white ; border : none")
+        self.DeadLineText.setStyleSheet("color : white ; border : none")
+        self.ImportanceText.setStyleSheet("color : white ; border : none")
+        self.MilestoneText.setStyleSheet("color : white ; border : none")
+        self.PersonsText.setStyleSheet("color : white ; border : none")
+        self.CanclepushButton.setStyleSheet("background-color : #1a161c ; color : white")
+        self.SubmitpushButton.setStyleSheet("background-color : #1a161c ; color : white")
+        self.AlertText_1.setStyleSheet("border : none ; color : red")
+        self.AlertText_2.setStyleSheet("border : none ; color : red")
+        self.AlertText_3.setStyleSheet("border : none ; color : red")
+        self.AlertText_4.setStyleSheet("border : none ; color : red")
+        self.AlertText_5.setStyleSheet("border : none ; color : red")
+        self.AlertText_6.setStyleSheet("border : none ; color : red")
+        ####################################################################################################
+        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.StartedTimedateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.DeadLinedateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.ImportanceEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.MilestoneEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.PersonsEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        ####################################################################################################
+        self.AlertText_1.hide()
+        self.AlertText_2.hide()
+        self.AlertText_3.hide()
+        self.AlertText_4.hide()
+        self.AlertText_5.hide()
+        self.AlertText_6.hide()
+        ####################################################################################################
+        self.CanclepushButton.clicked.connect(self.close)
+        #self.SubmitpushButton.clicked.connect(self.send_data)
+        ####################################################################################################
+        self.StartedTimedateEdit.setDisplayFormat("MMMM dd yyyy") 
+        x = datetime.datetime.now()
+        self.StartedTimedateEdit.setDate(QDate(x.year , x.month , x.day))
+        self.StartedTimedateEdit.setCalendarPopup(1)
+        y = QCalendarWidget()
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
+        self.StartedTimedateEdit.setCalendarWidget(y)
+
+        self.DeadLinedateEdit.setDisplayFormat("MMMM dd yyyy") 
+        x = datetime.datetime.now()
+        self.DeadLinedateEdit.setDate(QDate(x.year , x.month , x.day))
+        self.DeadLinedateEdit.setCalendarPopup(1)
+        y = QCalendarWidget()
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
+        self.DeadLinedateEdit.setCalendarWidget(y)
+
 
 
 if __name__ == "__main__" :
