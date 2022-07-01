@@ -15,6 +15,7 @@ class programData():
     def __init__(self) :
         self.employ = []
         self.task = []
+       
 
     def addEmployee(self ,name ,serialNumber , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks):
         person = Person(name ,serialNumber , sex , age , entranceTime , tasks , finishedTasks , unfinishedTasks)
@@ -194,9 +195,10 @@ class SecondWindow (QMainWindow , Employee):
             print(self.TasksEdit.text())
             print(self.FinishedTasksEdit.text())
             print(self.UnfinishedTasksEdit.text())
-            self.employ_data.addEmployee(self.NameEdit.text() ,self.IDEdit.text() , self.sex , self.AgeEdit.text() , self.EntranceTimeEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
-            print("employ: ", self.employ_data.employ)
-            
+            #self.employ_data.addEmployee(self.NameEdit.text() ,self.IDEdit.text() , self.sex , self.AgeEdit.text() , self.EntranceTimeEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            #print("employ: ", self.employ_data.employ)
+            person = Person(self.NameEdit.text() ,self.IDEdit.text() , self.sex , self.AgeEdit.text() , self.EntranceTimeEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+           
             self.NameEdit.clear()
             self.IDEdit.clear()
             if self.MaleradioButton.isChecked():
