@@ -228,6 +228,9 @@ class MainWindow (QMainWindow , Home):
             self.w.show()
         else :
             return
+    def deleteTask(self , index) :
+        self.data.task.pop(index)
+        self.task()
 
 class EmployeeWindow (QMainWindow , Employee):
     def __init__(self , MainWindow , inde):
