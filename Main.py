@@ -243,8 +243,6 @@ class EmployeeWindow (QMainWindow , Employee):
         self.AlertText_4.setStyleSheet("border : none ; color : red")
         self.AlertText_5.setStyleSheet("border : none ; color : red")
         self.AlertText_6.setStyleSheet("border : none ; color : red")
-        self.AlertText_7.setStyleSheet("border : none ; color : red")
-        self.AlertText_8.setStyleSheet("border : none ; color : red")
         ####################################################################################################
         self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
         self.IDspinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
@@ -260,8 +258,9 @@ class EmployeeWindow (QMainWindow , Employee):
         self.AlertText_4.hide()
         self.AlertText_5.hide()
         self.AlertText_6.hide()
-        self.AlertText_7.hide()
-        self.AlertText_8.hide()
+        ####################################################################################################
+        self.CanclepushButton.clicked.connect(self.close)
+        #self.SubmitpushButton.clicked.connect(self.send_data)
         ####################################################################################################
         self.IDspinBox.setMinimum(10000000)
         self.IDspinBox.setMaximum(99999999)
@@ -276,9 +275,15 @@ class EmployeeWindow (QMainWindow , Employee):
         self.dateEdit.setCalendarWidget(y)
 
         # mehdi injaro bekhon Bara to zadam ino
-        self.MainWindow.data.addEmployee("sina" , 11000000 , "male" , 18 , "kjkdjsd" , "jhjkhd" , "djhfkhf" , "jshkahsjdasd")
-        self.MainWindow.employ()
+        #self.MainWindow.data.addEmployee("sina" , 11000000 , "male" , 18 , "kjkdjsd" , "jhjkhd" , "djhfkhf" , "jshkahsjdasd")
+        #self.MainWindow.employ()
         ####################################################################################################
+        #def send_data(self):
+        #    self.close()
+
+        def close(self):
+            self.close()
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
