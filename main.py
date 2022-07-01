@@ -221,16 +221,16 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setAlignment(Qt.AlignCenter)
     def add(self) :
         if (self.addSignal == "employ"):
-            self.w = EmployeeWindow(self)
+            self.w = EmployeeWindow(self , "none")
             self.w.show()
         elif(self.addSignal == "task"):
-            self.w = TaskWindow(self)
+            self.w = TaskWindow(self , "none")
             self.w.show()
         else :
             return
 
 class EmployeeWindow (QMainWindow , Employee):
-    def __init__(self , MainWindow):
+    def __init__(self , MainWindow , inde):
         super(EmployeeWindow, self).__init__()
         self.setupUi(self)
         self.MainWindow = MainWindow
@@ -282,6 +282,18 @@ class EmployeeWindow (QMainWindow , Employee):
         self.dateEdit.setCalendarWidget(y)
         self.CanclepushButton.clicked.connect(self.close)
         self.SubmitpushButton.clicked.connect(self.submit)
+        if (inde != "none") :  
+            self.NameEdit.setValue(MainWindow.data.employ[inde].name)
+            self.IDspinBox.setValue(MainWindow.data.employ[inde].ID)
+            self.AgespinBox.setValue(MainWindow.data.employ[inde].age)
+            self.dateEdit.setValue(MainWindow.data.employ[inde].age)
+            self.TasksEdit.setValue(MainWindow.data.employ[inde].tasks)
+            self.FinishedTasksEdit.setValue(MainWindow.data.employ[inde].finishedTasks)
+            self.UnfinishedTasksEdit.setValue(MainWindow.data.employ[inde].unfinishedTasks)
+            if (MainWindow.data.employ[inde].sex == "Male") :
+                self.MaleradioButton.setChecked()
+            else :
+                self.FemaleradioButton.setChecked()
 
     def submit(self) :
         flag = 0
