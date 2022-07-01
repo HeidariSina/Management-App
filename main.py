@@ -1,4 +1,3 @@
-
 import datetime
 import os
 import sys
@@ -279,6 +278,63 @@ class EmployeeWindow (QMainWindow , Employee):
             
             self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.text() , self.sex , self.AgespinBox.text() , self.dateEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
             self.MainWindow.employ()
+            self.close()
+            
+class TaskWindow (QMainWindow , Task):
+    
+    def __init__(self , MainWindow):
+        super(TaskWindow, self).__init__()
+        self.setupUi(self)
+        self.MainWindow = MainWindow
+        ####################################################################################################
+        self.MainText.setStyleSheet("color : white ; border : none")
+        self.NameText.setStyleSheet("color : white ; border : none")
+        self.startedTimeText.setStyleSheet("color : white ; border : none")
+        self.deadlineText.setStyleSheet("color : white ; border : none")
+        self.importanceText.setStyleSheet("color : white ; border : none")
+        self.milestoneText.setStyleSheet("color : white ; border : none")
+        self.personsText.setStyleSheet("color : white ; border : none")
+        ####################################################################################################
+        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.ImportanceEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.MilestoneEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        self.PersonsEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        ####################################################################################################
+        self.startedTimeEdit.setDisplayFormat("MMMM dd yyyy") 
+        self.startedTimeEdit.setDisplayFormat("MMMM dd yyyy") 
+        x = datetime.datetime.now()
+        self.startedTimeEdit.setDate(QDate(x.year , x.month , x.day))
+        self.startedTimeEdit.setCalendarPopup(1)
+        y = QCalendarWidget()
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
+        self.startedTimeEdit.setCalendarWidget(y)
+        
+        
+        self.deadlineEdit.setDisplayFormat("MMMM dd yyyy") 
+        self.deadlineEdit.setDisplayFormat("MMMM dd yyyy") 
+        x = datetime.datetime.now()
+        self.deadlineEdit.setDate(QDate(x.year , x.month , x.day))
+        self.deadlineEdit.setCalendarPopup(1)
+        y = QCalendarWidget()
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
+        self.deadlineEdit.setCalendarWidget(y)
+
+        self.submitbutton.setStyleSheet("color: white ; background-color: #1a161c")
+        self.ErrorBox.setStyleSheet("color: white ; background-color: #1a161c ; border: none")
+        self.submitbutton.clicked.connect(self.submit)
+        
+        
+    def submit(self) :
+        
+        if(self.NameEdit.text() == "" or self.ImportanceEdit.text() == "" or self.MilestoneEdit.text() == "" or self.PersonsEdit.text() == "") :
+            
+            self.ErrorBox.setText("Empty Boxes!!!")
+            
+        else :
+            self.ErrorBox.clear()
+            
+            self.MainWindow.data.addTask(self.NameEdit.text() , self.startedTimeEdit.text() , self.sex , self.deadlineEdit.text() , self.ImportanceEdit.text() , self.MilestoneEdit.text() , self.PesonsEdit.text())
+            self.MainWindow.task()
             self.close()
         
         
