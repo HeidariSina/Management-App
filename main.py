@@ -234,6 +234,9 @@ class MainWindow (QMainWindow , Home):
     def deleteEmployee(self , index) :
         self.data.employ.pop(index)
         self.employ()
+    def editEmployee(self , index) :
+        self.w = EmployeeWindow(self , index)
+        self.w.show()
 
 class EmployeeWindow (QMainWindow , Employee):
     def __init__(self , MainWindow , inde):
