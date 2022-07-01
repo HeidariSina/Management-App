@@ -121,14 +121,24 @@ class MainWindow (QMainWindow , Home):
                 tasks = QTableWidgetItem(emploees.tasks)
                 tasks.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 5 ,tasks )
+                if (emploees.finishedTasks == ""):
+                    finishedTasks = QTableWidgetItem("none")
+                    finishedTasks.setTextAlignment(Qt.AlignCenter)
+                    self.tableWidget.setItem(i , 6 , finishedTasks )
+                else :
+                    finishedTasks = QTableWidgetItem(emploees.finishedTasks)
+                    finishedTasks.setTextAlignment(Qt.AlignCenter)
+                    self.tableWidget.setItem(i , 6 , finishedTasks )
+                
+                if (emploees.unfinishedTasks == ""):
+                    finishedTasks = QTableWidgetItem("none")
+                    finishedTasks.setTextAlignment(Qt.AlignCenter)
+                    self.tableWidget.setItem(i , 7 , finishedTasks )
+                else :
+                    finishedTasks = QTableWidgetItem(emploees.unfinishedTasks)
+                    finishedTasks.setTextAlignment(Qt.AlignCenter)
+                    self.tableWidget.setItem(i , 7 , finishedTasks )
 
-                finishedTasks = QTableWidgetItem(emploees.finishedTasks)
-                finishedTasks.setTextAlignment(Qt.AlignCenter)
-                self.tableWidget.setItem(i , 6 , finishedTasks )
-
-                unfinishedTasks = QTableWidgetItem(emploees.unfinishedTasks)
-                unfinishedTasks.setTextAlignment(Qt.AlignCenter)
-                self.tableWidget.setItem(i , 7 ,unfinishedTasks )
                 i = i + 1
         else :
             self.tableWidget.hide()
@@ -230,12 +240,18 @@ class EmployeeWindow (QMainWindow , Employee):
         self.IDText.setStyleSheet("color : white ; border : none")
         self.SexText.setStyleSheet("color : white ; border : none")
         self.AgeText.setStyleSheet("color : white ; border : none")
-        self.EmployeeDateText.setStyleSheet("color : white ; border : none")
+        self.JointDateText.setStyleSheet("color : white ; border : none")
         self.TasksText.setStyleSheet("color : white ; border : none")
         self.FinishedTasksText.setStyleSheet("color : white ; border : none")
         self.UnfinishedTasksText.setStyleSheet("color : white ; border : none")
         self.MaleradioButton.setStyleSheet("color : white")
         self.FemaleradioButton.setStyleSheet("color : white")
+        self.AlertText_1.setStyleSheet("border : none ; color : red")
+        self.AlertText_2.setStyleSheet("border : none ; color : red")
+        self.AlertText_3.setStyleSheet("border : none ; color : red")
+        self.AlertText_4.setStyleSheet("border : none ; color : red")
+        self.AlertText_5.setStyleSheet("border : none ; color : red")
+        self.AlertText_6.setStyleSheet("border : none ; color : red")
         ####################################################################################################
         self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
         self.IDspinBox.setStyleSheet("background-color : #54485b ; color : white ; border : none")
@@ -244,6 +260,13 @@ class EmployeeWindow (QMainWindow , Employee):
         self.TasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
         self.FinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
         self.UnfinishedTasksEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none")
+        ####################################################################################################
+        self.AlertText_1.hide()
+        self.AlertText_2.hide()
+        self.AlertText_3.hide()
+        self.AlertText_4.hide()
+        self.AlertText_5.hide()
+        self.AlertText_6.hide()
         ####################################################################################################
         self.IDspinBox.setMinimum(10000000)
         self.IDspinBox.setMaximum(99999999)
@@ -257,19 +280,39 @@ class EmployeeWindow (QMainWindow , Employee):
         y = QCalendarWidget()
         y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
         self.dateEdit.setCalendarWidget(y)
+        self.CanclepushButton.clicked.connect(self.close)
+        self.SubmitpushButton.clicked.connect(self.submit)
 
-        def submit(self) :
-        
-            if(self.NameEdit.text() == "" or self.IDspinBox.text() == "" or self.AgespinBox.text() == "" or self.dateEdit.text() == "" or self.TasksEdit.text() == "" or self.FinishedTasksEdit.text() == "" or self.UnfinishedTasksEdit.text() == "" or(self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
-                self.ErrorBox.setText("Empty Boxes!!!")
-            else :
-                if self.MaleradioButton.isChecked():
-                    self.sex = "Male"
-                elif self.FemaleradioButton.isChecked():
-                    self.sex = "Female"
-                self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.text() , self.sex , self.AgespinBox.text() , self.dateEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
-                self.MainWindow.employ()
-                self.close()
+    def submit(self) :
+        flag = 0
+        if(self.NameEdit.text() == "") :
+            self.AlertText_1.show()
+            flag = 1
+        if(self.IDspinBox.text() == "") :
+            self.AlertText_2.show()
+            flag = 1
+        if(self.AgespinBox.text() == "") :
+            self.AlertText_4.show()
+            flag = 1
+        if(self.dateEdit.text() == "") :
+            self.AlertText_5.show()
+            flag = 1
+        if(self.TasksEdit.text() == "") :
+            self.AlertText_6.show()
+            flag = 1
+        if((self.MaleradioButton.isChecked() == False and self.FemaleradioButton.isChecked() == False)) :
+            self.AlertText_3.show()
+            flag = 1
+        if (flag == 0):
+            if self.MaleradioButton.isChecked():
+                self.sex = "Male"
+            elif self.FemaleradioButton.isChecked():
+                self.sex = "Female"
+            self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            self.MainWindow.employ()
+            self.close()
+    def exi(self):
+            self.close()
 
 class TaskWindow (QMainWindow , Tasks):
     def __init__(self , MainWindow):
