@@ -241,7 +241,6 @@ class MainWindow (QMainWindow , Home):
         self.w = TaskWindow(self , index)
         self.w.show()
     
-
 class EmployeeWindow (QMainWindow , Employee):
     def __init__(self , MainWindow , inde):
         super(EmployeeWindow, self).__init__()
