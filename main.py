@@ -231,6 +231,9 @@ class MainWindow (QMainWindow , Home):
     def deleteTask(self , index) :
         self.data.task.pop(index)
         self.task()
+    def deleteEmployee(self , index) :
+        self.data.employ.pop(index)
+        self.employ()
 
 class EmployeeWindow (QMainWindow , Employee):
     def __init__(self , MainWindow , inde):
