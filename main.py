@@ -1,11 +1,11 @@
 import datetime
-from ntpath import join
 import os
 import sys
 from PyQt5 import uic 
 from PyQt5.QtCore import Qt  , QDate  , QPoint 
 from PyQt5.QtGui import QColor , QCursor 
 from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView  , QCalendarWidget , QGraphicsDropShadowEffect , QPushButton
+import pickle
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
@@ -40,8 +40,10 @@ class Task () :
 
 class programData():
     def __init__(self) :
-        self.employ = []
-        self.task = []
+        with open('db.pickle', 'rb') as handle:
+            b = pickle.load(handle)
+        self.employ = b.employ
+        self.task = b.task
 
     def addEmployee(self ,name ,ID , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks):
         person = Person(name ,ID , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks)
@@ -309,10 +311,13 @@ class MainWindow (QMainWindow , Home):
             return
     def deleteTask(self , index) :
         self.data.task.pop(index -1)
+        with open('db.pickle', 'wb') as handle:
+                pickle.dump(self.data, handle, protocol=pickle.HIGHEST_PROTOCOL)
         self.task()
     def deleteEmployee(self , index) :
-        print(index)
         self.data.employ.pop(index - 1)
+        with open('db.pickle', 'wb') as handle:
+                pickle.dump(self.data, handle, protocol=pickle.HIGHEST_PROTOCOL)
         self.employ()
     def editTask(self , index) :
         self.w = TaskWindow(self , index - 1)
@@ -429,6 +434,8 @@ class EmployeeWindow (QMainWindow , Employee):
                 self.MainWindow.data.employ[self.inde] = Person(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.date() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
             else :
                 self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.date() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            with open('db.pickle', 'wb') as handle:
+                pickle.dump(self.MainWindow.data, handle, protocol=pickle.HIGHEST_PROTOCOL)
             self.MainWindow.employ()
             self.close()
 
@@ -550,6 +557,8 @@ class TaskWindow (QMainWindow , Tasks):
                 self.MainWindow.data.task[self.inde].persons  = self.PersonsEdit.text()
             else :
                 self.MainWindow.data.addTask(self.NameEdit.text() , self.StartedTimedateEdit.date(), self.DeadLinedateEdit.date() , self.ImportanceEdit.text() , MileStone(self.MilestoneEdit.text() ,self.MileStoneDate.date())  , self.PersonsEdit.text())
+            with open('db.pickle', 'wb') as handle:
+                pickle.dump(self.MainWindow.data, handle, protocol=pickle.HIGHEST_PROTOCOL)
             self.MainWindow.task()
             self.close()
 
@@ -597,6 +606,8 @@ class MileStonePage (QMainWindow , MileStones):
             flag = 1
         if (flag == 0):
             self.MainWindow.data.task[self.inde].milestone.append(MileStone(self.NameEdit.text() , self.StartedTimedateEdit.date()))
+            with open('db.pickle', 'wb') as handle:
+                pickle.dump(self.MainWindow.data, handle, protocol=pickle.HIGHEST_PROTOCOL)
             self.MainWindow.task()
             self.close()
 
