@@ -1,7 +1,7 @@
 # Management-App
-a Python App That Helps You To Manage Your Company /n
-its Works Fully with GUI and it's run with QT5 Engine /n
-for RUN only type following command in your CMD /n
+a Python App That Helps You To Manage Your Company__
+its Works Fully with GUI and it's run with QT5 Engine__
+for RUN only type following command in your CMD__
 **python ./main**
 
 - APP's Feature :
