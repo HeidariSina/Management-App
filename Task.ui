@@ -123,7 +123,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Task Window</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTextBrowser" name="MainText">
@@ -505,7 +505,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>10</x>
       <y>500</y>
-      <width>91</width>
+      <width>121</width>
       <height>30</height>
      </rect>
     </property>
@@ -566,7 +566,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:20pt; font-weight:600; font-style:italic;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;Milestone :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:400; font-style:normal; color:#ffffff;&quot;&gt;First Milestone :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="PersonsText">
@@ -654,9 +654,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="SubmitpushButton">
     <property name="geometry">
      <rect>
-      <x>205</x>
+      <x>245</x>
       <y>720</y>
-      <width>195</width>
+      <width>155</width>
       <height>25</height>
      </rect>
     </property>
@@ -672,13 +672,12 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>10</x>
       <y>720</y>
-      <width>195</width>
+      <width>155</width>
       <height>25</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Cancel</string>
@@ -1142,7 +1141,7 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>20</x>
       <y>540</y>
-      <width>370</width>
+      <width>241</width>
       <height>30</height>
      </rect>
     </property>
@@ -1151,6 +1150,16 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="alignment">
      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="MileStoneDate">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>540</y>
+      <width>110</width>
+      <height>31</height>
+     </rect>
     </property>
    </widget>
   </widget>
