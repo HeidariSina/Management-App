@@ -6,6 +6,6 @@ a Python App That Helps You To Manage Your Company
                - Edit Employee
                - Delete Employee
                - Add Task
-                  - Add Milestone for Tasks
+                 - Add Milestone for Tasks
                - Edit Task
                - Delete Task
