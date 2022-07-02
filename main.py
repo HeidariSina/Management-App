@@ -1,10 +1,11 @@
 import datetime
+from ntpath import join
 import os
 import sys
 from PyQt5 import uic 
 from PyQt5.QtCore import Qt  , QDate  , QPoint 
-from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView  , QCalendarWidget , QGraphicsDropShadowEffect
+from PyQt5.QtGui import QColor , QCursor 
+from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHeaderView  , QCalendarWidget , QGraphicsDropShadowEffect , QPushButton
 
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
@@ -67,12 +68,16 @@ class MainWindow (QMainWindow , Home):
         effect4 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=10, color=QColor("#2ed3e6"))
         self.employeeButton.setStyleSheet("background-color : #1a161c ; color : white ; border-radius : 20px ")
         self.employeeButton.setGraphicsEffect(effect2)
+        self.employeeButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.taskButton.setStyleSheet("background-color : #1a161c ; color : white ; border-radius : 20px")
         self.taskButton.setGraphicsEffect(effect)
+        self.taskButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.backButton.setStyleSheet("background-color : #1a161c ; color : white ; border-radius : 10px")
         self.backButton.setGraphicsEffect(effect4)
+        self.backButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.addbutton.setStyleSheet("background-color : #1a161c ; color : white ; border-radius : 10px")
         self.addbutton.setGraphicsEffect(effect3)
+        self.addbutton.setCursor(QCursor(Qt.PointingHandCursor))
         self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white")
         self.employeeButton.clicked.connect(self.employ)
         self.taskButton.clicked.connect(self.task)
@@ -93,19 +98,24 @@ class MainWindow (QMainWindow , Home):
             self.emptyText.hide()
             self.emptyText2.hide()
             self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white ; border : none")
-            self.tableWidget.setColumnCount(8)
+            self.tableWidget.setColumnCount(10)
             self.tableWidget.setRowCount(len(self.data.employ))
             self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
             self.tableWidget.setHorizontalHeaderItem( 1 , QTableWidgetItem("ID"))
             self.tableWidget.setHorizontalHeaderItem( 2 , QTableWidgetItem("Sex"))
             self.tableWidget.setHorizontalHeaderItem( 3 , QTableWidgetItem("Age"))
-            self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Entrance Time"))
+            self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Join Date"))
             self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Tasks"))
             self.tableWidget.setHorizontalHeaderItem( 6 , QTableWidgetItem("Finished Tasks"))
             self.tableWidget.setHorizontalHeaderItem( 7 , QTableWidgetItem("UnFinished Tasks"))
+            self.tableWidget.setHorizontalHeaderItem( 8 , QTableWidgetItem("Delete"))
+            self.tableWidget.setHorizontalHeaderItem( 9 , QTableWidgetItem("Edit"))
             self.tableWidget.horizontalHeader().setStyleSheet(" color : black")
             self.tableWidget.verticalHeader().setStyleSheet(" color : black")
+            header = self.tableWidget.horizontalHeader()
             self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            header.setSectionResizeMode(8 , 20)
+            header.setSectionResizeMode(9 , 20)
             self.tableWidget.verticalHeader().setDefaultSectionSize(85)
             i = 0
             for emploees in self.data.employ :
@@ -125,7 +135,7 @@ class MainWindow (QMainWindow , Home):
                 age.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 3 ,age )
 
-                joinDate = QTableWidgetItem(emploees.joinDate)
+                joinDate = QTableWidgetItem(emploees.joinDate.toString("MMMM dd yyyy"))
                 joinDate.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 4 ,joinDate )
 
@@ -149,6 +159,18 @@ class MainWindow (QMainWindow , Home):
                     finishedTasks = QTableWidgetItem(emploees.unfinishedTasks)
                     finishedTasks.setTextAlignment(Qt.AlignCenter)
                     self.tableWidget.setItem(i , 7 , finishedTasks )
+    
+                button = QPushButton("❌")
+                button.setStyleSheet("font : 20px ; color :red")
+                button.setCursor(QCursor(Qt.PointingHandCursor))
+                button.clicked.connect(lambda: self.deleteEmployee(i))
+                self.tableWidget.setCellWidget(i , 8 , button )
+
+                button2 = QPushButton("🖊️")
+                button2.setStyleSheet("font : 20px ; color :green")
+                button2.setCursor(QCursor(Qt.PointingHandCursor))
+                button2.clicked.connect(lambda: self.editEmployee(i))
+                self.tableWidget.setCellWidget(i , 9 , button2 )
 
                 i = i + 1
         else :
@@ -174,7 +196,7 @@ class MainWindow (QMainWindow , Home):
             self.emptyText.hide()
             self.emptyText2.hide()
             self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white ;border : none ; ")
-            self.tableWidget.setColumnCount(6)
+            self.tableWidget.setColumnCount(8)
             self.tableWidget.setRowCount(len(self.data.task))
             self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
             self.tableWidget.setHorizontalHeaderItem( 1 , QTableWidgetItem("Started Time"))
@@ -182,9 +204,14 @@ class MainWindow (QMainWindow , Home):
             self.tableWidget.setHorizontalHeaderItem( 3 , QTableWidgetItem("Importance"))
             self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Milestone"))
             self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Persons"))
+            self.tableWidget.setHorizontalHeaderItem( 6 , QTableWidgetItem("Delete"))
+            self.tableWidget.setHorizontalHeaderItem( 7 , QTableWidgetItem("Edit"))
             self.tableWidget.horizontalHeader().setStyleSheet(" color : black")
             self.tableWidget.verticalHeader().setStyleSheet(" color : black")
             self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+            header = self.tableWidget.horizontalHeader()
+            header.setSectionResizeMode(6 , 20)
+            header.setSectionResizeMode(7 , 20)
             self.tableWidget.verticalHeader().setDefaultSectionSize(85)
             i = 0
             for tasks in self.data.task :
@@ -192,11 +219,11 @@ class MainWindow (QMainWindow , Home):
                 name.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 0 ,name )
 
-                id = QTableWidgetItem(str(tasks.startedTime))
+                id = QTableWidgetItem(str(tasks.startedTime.toString("MMMM dd yyyy")))
                 id.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 1 ,id )
 
-                sex = QTableWidgetItem(tasks.deadline)
+                sex = QTableWidgetItem(tasks.deadline.toString("MMMM dd yyyy"))
                 sex.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 2 ,sex )
 
@@ -211,6 +238,19 @@ class MainWindow (QMainWindow , Home):
                 person = QTableWidgetItem(tasks.persons)
                 person.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 5 ,person )
+
+                button = QPushButton("❌")
+                button.setStyleSheet("font : 20px ; color :red")
+                button.setCursor(QCursor(Qt.PointingHandCursor))
+                button.clicked.connect(lambda: self.deleteTask(i))
+                self.tableWidget.setCellWidget(i , 6 , button )
+
+                button2 = QPushButton("🖊️")
+                button2.setStyleSheet("font : 20px ; color :green")
+                button2.setCursor(QCursor(Qt.PointingHandCursor))
+                button2.clicked.connect(lambda: self.editTask(i))
+                self.tableWidget.setCellWidget(i , 7 , button2 )
+
         else :
             self.emptyText.show()
             self.emptyText2.show()
@@ -242,16 +282,17 @@ class MainWindow (QMainWindow , Home):
         else :
             return
     def deleteTask(self , index) :
-        self.data.task.pop(index)
+        self.data.task.pop(index -1)
         self.task()
     def deleteEmployee(self , index) :
-        self.data.employ.pop(index)
+        print(index)
+        self.data.employ.pop(index - 1)
         self.employ()
     def editTask(self , index) :
-        self.w = EmployeeWindow(self , index)
+        self.w = TaskWindow(self , index -1)
         self.w.show()
     def editEmployee(self , index) :
-        self.w = TaskWindow(self , index)
+        self.w = EmployeeWindow(self , index -1)
         self.w.show()
     
 class EmployeeWindow (QMainWindow , Employee):
@@ -297,8 +338,7 @@ class EmployeeWindow (QMainWindow , Employee):
         self.IDspinBox.setMaximum(99999999)
         self.AgespinBox.setMaximum(100)
         self.AgespinBox.setMinimum(15)
-        self.dateEdit.setDisplayFormat("MMMM dd yyyy") 
-        self.dateEdit.setDisplayFormat("MMMM dd yyyy") 
+        self.dateEdit.setDisplayFormat("MMMM dd yyyy")  
         x = datetime.datetime.now()
         self.dateEdit.setDate(QDate(x.year , x.month , x.day))
         self.dateEdit.setCalendarPopup(1)
@@ -315,17 +355,20 @@ class EmployeeWindow (QMainWindow , Employee):
         self.CanclepushButton.setGraphicsEffect(effect2)
 
         if (inde != "none") :  
-            self.NameEdit.setValue(MainWindow.data.employ[inde].name)
+            self.MainText.setText("Edit Person")
+            self.MainText.setStyleSheet("color : white ; border : none")
+            self.MainText.setAlignment(Qt.AlignCenter)
+            self.NameEdit.setText(MainWindow.data.employ[inde].name)
             self.IDspinBox.setValue(MainWindow.data.employ[inde].ID)
             self.AgespinBox.setValue(MainWindow.data.employ[inde].age)
-            self.dateEdit.setValue(MainWindow.data.employ[inde].age)
-            self.TasksEdit.setValue(MainWindow.data.employ[inde].tasks)
-            self.FinishedTasksEdit.setValue(MainWindow.data.employ[inde].finishedTasks)
-            self.UnfinishedTasksEdit.setValue(MainWindow.data.employ[inde].unfinishedTasks)
+            self.dateEdit.setDate(QDate(MainWindow.data.employ[inde].joinDate))
+            self.TasksEdit.setText(MainWindow.data.employ[inde].tasks)
+            self.FinishedTasksEdit.setText(MainWindow.data.employ[inde].finishedTasks)
+            self.UnfinishedTasksEdit.setText(MainWindow.data.employ[inde].unfinishedTasks)
             if (MainWindow.data.employ[inde].sex == "Male") :
-                self.MaleradioButton.setChecked()
+                self.MaleradioButton.setChecked(1)
             else :
-                self.FemaleradioButton.setChecked()
+                self.FemaleradioButton.setChecked(1)
 
     def submit(self) :
         flag = 0
@@ -352,7 +395,7 @@ class EmployeeWindow (QMainWindow , Employee):
                 self.sex = "Male"
             elif self.FemaleradioButton.isChecked():
                 self.sex = "Female"
-            self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.text() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.date() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
             self.MainWindow.employ()
             self.close()
     def exi(self):
@@ -423,12 +466,15 @@ class TaskWindow (QMainWindow , Tasks):
         self.SubmitpushButton.clicked.connect(self.submit)
 
         if (inde != "none") :  
-            self.NameEdit.setValue(MainWindow.data.task[inde].name)
-            self.StartedTimedateEdit.setValue(MainWindow.data.task[inde].startedTime)
-            self.DeadLinedateEdit.setValue(MainWindow.data.task[inde].deadline)
-            self.ImportanceEdit.setValue(MainWindow.data.task[inde].importance)
-            self.MilestoneEdit.setValue(MainWindow.data.task[inde].milestone)
-            self.PersonsEdit.setValue(MainWindow.data.task[inde].persons)
+            self.MainText.setText("Edit Task")
+            self.MainText.setStyleSheet("color : white ; border : none")
+            self.MainText.setAlignment(Qt.AlignCenter)
+            self.NameEdit.setText(MainWindow.data.task[inde].name)
+            self.StartedTimedateEdit.setDate(MainWindow.data.task[inde].startedTime)
+            self.DeadLinedateEdit.setDate(MainWindow.data.task[inde].deadline)
+            self.ImportanceEdit.setText(MainWindow.data.task[inde].importance)
+            self.MilestoneEdit.setText(MainWindow.data.task[inde].milestone)
+            self.PersonsEdit.setText(MainWindow.data.task[inde].persons)
 
     def submit(self) :
         flag = 0
@@ -451,7 +497,7 @@ class TaskWindow (QMainWindow , Tasks):
             self.AlertText_6.show()
             flag = 1
         if (flag == 0):
-            self.MainWindow.data.addTask(self.NameEdit.text() , self.StartedTimedateEdit.text(), self.DeadLinedateEdit.text() , self.ImportanceEdit.text() , self.MilestoneEdit.text() , self.PersonsEdit.text())
+            self.MainWindow.data.addTask(self.NameEdit.text() , self.StartedTimedateEdit.date(), self.DeadLinedateEdit.date() , self.ImportanceEdit.text() , self.MilestoneEdit.text() , self.PersonsEdit.text())
             self.MainWindow.task()
             self.close()
     def exi(self):
