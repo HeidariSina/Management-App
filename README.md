@@ -5,7 +5,7 @@ its Works Fully functional with GUI and it's run with QT5 Engine so you need it 
 \
 for RUN the code only type following command in your CMD\
 \
-**python ./main**
+**python ./main**\
 \
 for install QT5 run following code in cmd\
 \
