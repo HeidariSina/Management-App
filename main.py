@@ -12,9 +12,9 @@ Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
 Tasks = uic.loadUiType(os.path.join(os.getcwd() , "Task.ui"))[0]
 
 class MileStone() :
-    def __init__(self , name , checked):
+    def __init__(self , name , date):
         self.name = name
-        self.checked = checked
+        self.date = date
 
 class Person () :
     def __init__(self , name ,ID , sex , age , joinDate , tasks , finishedTasks , unfinishedTasks ) :
@@ -29,11 +29,12 @@ class Person () :
 
 class Task () :
     def __init__(self , name ,startedTime , deadline , importance , milestone  ,persons  ) :
+        self.milestone = []
         self.name = name
         self.startedTime = startedTime
         self.deadline = deadline
         self.importance = importance
-        self.milestone = milestone
+        self.milestone.append(milestone)
         self.persons = persons
 
 class programData():
@@ -231,7 +232,14 @@ class MainWindow (QMainWindow , Home):
                 age.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 3 ,age )
 
-                joinDate = QTableWidgetItem(tasks.milestone)
+                text = ""                
+                for mile in tasks.milestone :
+                    x = datetime.datetime.now()
+                    y = QDate(x.year , x.month , x.day)
+                    days = y.daysTo(mile.date)
+                    text  = text + mile.name + "  --> with Remaining Days: " + str(days) + "\n"
+
+                joinDate = QTableWidgetItem(text)
                 joinDate.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 4 ,joinDate )
 
@@ -299,6 +307,7 @@ class EmployeeWindow (QMainWindow , Employee):
     def __init__(self , MainWindow , inde):
         super(EmployeeWindow, self).__init__()
         self.setupUi(self)
+        self.inde = inde
         self.MainWindow = MainWindow
         ####################################################################################################
         self.MainText.setStyleSheet("color : white ; border : none")
@@ -358,14 +367,14 @@ class EmployeeWindow (QMainWindow , Employee):
             self.MainText.setText("Edit Person")
             self.MainText.setStyleSheet("color : white ; border : none")
             self.MainText.setAlignment(Qt.AlignCenter)
-            self.NameEdit.setText(MainWindow.data.employ[inde].name)
-            self.IDspinBox.setValue(MainWindow.data.employ[inde].ID)
-            self.AgespinBox.setValue(MainWindow.data.employ[inde].age)
-            self.dateEdit.setDate(QDate(MainWindow.data.employ[inde].joinDate))
-            self.TasksEdit.setText(MainWindow.data.employ[inde].tasks)
-            self.FinishedTasksEdit.setText(MainWindow.data.employ[inde].finishedTasks)
-            self.UnfinishedTasksEdit.setText(MainWindow.data.employ[inde].unfinishedTasks)
-            if (MainWindow.data.employ[inde].sex == "Male") :
+            self.NameEdit.setText(MainWindow.data.employ[self.inde].name)
+            self.IDspinBox.setValue(MainWindow.data.employ[self.inde].ID)
+            self.AgespinBox.setValue(MainWindow.data.employ[self.inde].age)
+            self.dateEdit.setDate(QDate(MainWindow.data.employ[self.inde].joinDate))
+            self.TasksEdit.setText(MainWindow.data.employ[self.inde].tasks)
+            self.FinishedTasksEdit.setText(MainWindow.data.employ[self.inde].finishedTasks)
+            self.UnfinishedTasksEdit.setText(MainWindow.data.employ[self.inde].unfinishedTasks)
+            if (MainWindow.data.employ[self.inde].sex == "Male") :
                 self.MaleradioButton.setChecked(1)
             else :
                 self.FemaleradioButton.setChecked(1)
@@ -395,7 +404,10 @@ class EmployeeWindow (QMainWindow , Employee):
                 self.sex = "Male"
             elif self.FemaleradioButton.isChecked():
                 self.sex = "Female"
-            self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.date() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            if (self.inde != "none") :
+                self.MainWindow.data.employ[self.inde] = Person(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.date() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
+            else :
+                self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.date() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
             self.MainWindow.employ()
             self.close()
     def exi(self):
@@ -405,6 +417,7 @@ class TaskWindow (QMainWindow , Tasks):
     def __init__(self , MainWindow , inde):
         super(TaskWindow, self).__init__()
         self.setupUi(self)
+        self.inde = inde
         self.MainWindow = MainWindow
         ####################################################################################################
         self.MainText.setStyleSheet("color : white ; border : none")
@@ -428,6 +441,7 @@ class TaskWindow (QMainWindow , Tasks):
         self.DeadLinedateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
         self.ImportanceEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
         self.MilestoneEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        self.MileStoneDate.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 5px")
         self.PersonsEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
         ####################################################################################################
         self.AlertText_1.hide()
@@ -447,6 +461,7 @@ class TaskWindow (QMainWindow , Tasks):
         y = QCalendarWidget()
         y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
         self.StartedTimedateEdit.setCalendarWidget(y)
+
         effect1 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#111"))
         effect2 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#111"))
         self.SubmitpushButton.setStyleSheet("background-color : #034a21 ; color : white ; border-radius : 10px")
@@ -462,6 +477,14 @@ class TaskWindow (QMainWindow , Tasks):
         y.setStyleSheet("background-color : #54485b ; color : black ; border : none ")
         self.DeadLinedateEdit.setCalendarWidget(y)
 
+        self.MileStoneDate.setDisplayFormat("MMMM dd yyyy")
+        x = datetime.datetime.now()
+        self.MileStoneDate.setDate(QDate(x.year , x.month , x.day))
+        self.MileStoneDate.setCalendarPopup(1)
+        y = QCalendarWidget()
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none ")
+        self.MileStoneDate.setCalendarWidget(y)
+
         self.CanclepushButton.clicked.connect(self.close)
         self.SubmitpushButton.clicked.connect(self.submit)
 
@@ -473,7 +496,8 @@ class TaskWindow (QMainWindow , Tasks):
             self.StartedTimedateEdit.setDate(MainWindow.data.task[inde].startedTime)
             self.DeadLinedateEdit.setDate(MainWindow.data.task[inde].deadline)
             self.ImportanceEdit.setText(MainWindow.data.task[inde].importance)
-            self.MilestoneEdit.setText(MainWindow.data.task[inde].milestone)
+            self.MilestoneEdit.setText(MainWindow.data.task[inde].milestone[0].name)
+            self.MileStoneDate.setDate(MainWindow.data.task[inde].milestone[0].date)
             self.PersonsEdit.setText(MainWindow.data.task[inde].persons)
 
     def submit(self) :
@@ -497,7 +521,16 @@ class TaskWindow (QMainWindow , Tasks):
             self.AlertText_6.show()
             flag = 1
         if (flag == 0):
-            self.MainWindow.data.addTask(self.NameEdit.text() , self.StartedTimedateEdit.date(), self.DeadLinedateEdit.date() , self.ImportanceEdit.text() , self.MilestoneEdit.text() , self.PersonsEdit.text())
+            if (self.inde != "none") :
+                self.MainWindow.data.task[self.inde].name  = self.NameEdit.text()
+                self.MainWindow.data.task[self.inde].startedTime  = self.StartedTimedateEdit.date()
+                self.MainWindow.data.task[self.inde].deadline  = self.DeadLinedateEdit.date()
+                self.MainWindow.data.task[self.inde].importance  = self.ImportanceEdit.text()
+                self.MainWindow.data.task[self.inde].milestone[0].name  = self.MilestoneEdit.text() 
+                self.MainWindow.data.task[self.inde].milestone[0].date  = self.MileStoneDate.date()
+                self.MainWindow.data.task[self.inde].persons  = self.PersonsEdit.text()
+            else :
+                self.MainWindow.data.addTask(self.NameEdit.text() , self.StartedTimedateEdit.date(), self.DeadLinedateEdit.date() , self.ImportanceEdit.text() , MileStone(self.MilestoneEdit.text() ,self.MileStoneDate.date())  , self.PersonsEdit.text())
             self.MainWindow.task()
             self.close()
     def exi(self):
