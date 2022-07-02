@@ -7,7 +7,7 @@ for RUN the code only type following command in your CMD:\
 \
 **python ./main**\
 \
-for install QT5 run following code in cmd:\
+for install QT5 run following code in CMD:\
 \
 **pip install PyQt5**
 
