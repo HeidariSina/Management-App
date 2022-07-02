@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QApplication , QMainWindow , QTableWidgetItem  ,QHea
 Home = uic.loadUiType(os.path.join(os.getcwd() , "QT.ui"))[0]
 Employee = uic.loadUiType(os.path.join(os.getcwd() , "Employee.ui"))[0]
 Tasks = uic.loadUiType(os.path.join(os.getcwd() , "Task.ui"))[0]
+MileStones = uic.loadUiType(os.path.join(os.getcwd() , "MileStone.ui"))[0]
 
 class MileStone() :
     def __init__(self , name , date):
@@ -95,6 +96,7 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setStyleSheet("color : white ; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
         if (len(self.data.employ) != 0) :
+            self.tableWidget.clear()
             self.tableWidget.show()
             self.emptyText.hide()
             self.emptyText2.hide()
@@ -193,26 +195,29 @@ class MainWindow (QMainWindow , Home):
         self.MainText.setStyleSheet("color : white; border : none")
         self.MainText.setAlignment(Qt.AlignCenter)
         if (len(self.data.task) != 0) :
+            self.tableWidget.clear()
             self.tableWidget.show()
             self.emptyText.hide()
             self.emptyText2.hide()
             self.tableWidget.setStyleSheet("background-color : #1a161c ; color : white ;border : none ; ")
-            self.tableWidget.setColumnCount(8)
+            self.tableWidget.setColumnCount(9 )
             self.tableWidget.setRowCount(len(self.data.task))
             self.tableWidget.setHorizontalHeaderItem( 0 , QTableWidgetItem("Name"))
             self.tableWidget.setHorizontalHeaderItem( 1 , QTableWidgetItem("Started Time"))
             self.tableWidget.setHorizontalHeaderItem( 2 , QTableWidgetItem("Deadline"))
             self.tableWidget.setHorizontalHeaderItem( 3 , QTableWidgetItem("Importance"))
-            self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Milestone"))
-            self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Persons"))
-            self.tableWidget.setHorizontalHeaderItem( 6 , QTableWidgetItem("Delete"))
-            self.tableWidget.setHorizontalHeaderItem( 7 , QTableWidgetItem("Edit"))
+            self.tableWidget.setHorizontalHeaderItem( 4 , QTableWidgetItem("Persons"))
+            self.tableWidget.setHorizontalHeaderItem( 5 , QTableWidgetItem("Milestone"))
+            self.tableWidget.setHorizontalHeaderItem( 6 , QTableWidgetItem("Add M.S"))
+            self.tableWidget.setHorizontalHeaderItem( 7 , QTableWidgetItem("Delete"))
+            self.tableWidget.setHorizontalHeaderItem( 8 , QTableWidgetItem("Edit"))
             self.tableWidget.horizontalHeader().setStyleSheet(" color : black")
             self.tableWidget.verticalHeader().setStyleSheet(" color : black")
             self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
             header = self.tableWidget.horizontalHeader()
             header.setSectionResizeMode(6 , 20)
             header.setSectionResizeMode(7 , 20)
+            header.setSectionResizeMode(8 , 20)
             self.tableWidget.verticalHeader().setDefaultSectionSize(85)
             i = 0
             for tasks in self.data.task :
@@ -232,32 +237,45 @@ class MainWindow (QMainWindow , Home):
                 age.setTextAlignment(Qt.AlignCenter)
                 self.tableWidget.setItem(i , 3 ,age )
 
+                person = QTableWidgetItem(tasks.persons)
+                person.setTextAlignment(Qt.AlignCenter)
+                self.tableWidget.setItem(i , 4 ,person )
+
                 text = ""                
-                for mile in tasks.milestone :
+                for mile  in tasks.milestone :
                     x = datetime.datetime.now()
                     y = QDate(x.year , x.month , x.day)
                     days = y.daysTo(mile.date)
-                    text  = text + mile.name + "  --> with Remaining Days: " + str(days) + "\n"
+                    if (days < 1) :
+                        text  = text + mile.name + "  --> with Deadline Passed "
+                    else :
+                        text  = text + mile.name + "  --> with Remaining Days: " + str(days) 
+                    if (mile != tasks.milestone[len(tasks.milestone) - 1]):
+                        text = text + "\n"
 
                 joinDate = QTableWidgetItem(text)
                 joinDate.setTextAlignment(Qt.AlignCenter)
-                self.tableWidget.setItem(i , 4 ,joinDate )
+                self.tableWidget.setItem(i , 5 ,joinDate )
 
-                person = QTableWidgetItem(tasks.persons)
-                person.setTextAlignment(Qt.AlignCenter)
-                self.tableWidget.setItem(i , 5 ,person )
+
+
+                button = QPushButton("➕")
+                button.setStyleSheet("font : 20px")
+                button.setCursor(QCursor(Qt.PointingHandCursor))
+                button.clicked.connect(lambda: self.addMileStone(i))
+                self.tableWidget.setCellWidget(i , 6 , button )
 
                 button = QPushButton("❌")
-                button.setStyleSheet("font : 20px ; color :red")
+                button.setStyleSheet("font : 20px ")
                 button.setCursor(QCursor(Qt.PointingHandCursor))
                 button.clicked.connect(lambda: self.deleteTask(i))
-                self.tableWidget.setCellWidget(i , 6 , button )
+                self.tableWidget.setCellWidget(i , 7 , button )
 
                 button2 = QPushButton("🖊️")
                 button2.setStyleSheet("font : 20px ; color :green")
                 button2.setCursor(QCursor(Qt.PointingHandCursor))
                 button2.clicked.connect(lambda: self.editTask(i))
-                self.tableWidget.setCellWidget(i , 7 , button2 )
+                self.tableWidget.setCellWidget(i , 8 , button2 )
 
         else :
             self.emptyText.show()
@@ -297,10 +315,13 @@ class MainWindow (QMainWindow , Home):
         self.data.employ.pop(index - 1)
         self.employ()
     def editTask(self , index) :
-        self.w = TaskWindow(self , index -1)
+        self.w = TaskWindow(self , index - 1)
         self.w.show()
     def editEmployee(self , index) :
-        self.w = EmployeeWindow(self , index -1)
+        self.w = EmployeeWindow(self , index - 1)
+        self.w.show()
+    def addMileStone(self , index) :
+        self.w  = MileStonePage(self , index - 1)
         self.w.show()
     
 class EmployeeWindow (QMainWindow , Employee):
@@ -409,8 +430,6 @@ class EmployeeWindow (QMainWindow , Employee):
             else :
                 self.MainWindow.data.addEmployee(self.NameEdit.text() , self.IDspinBox.value() , self.sex , self.AgespinBox.value() , self.dateEdit.date() , self.TasksEdit.text() , self.FinishedTasksEdit.text() , self.UnfinishedTasksEdit.text())
             self.MainWindow.employ()
-            self.close()
-    def exi(self):
             self.close()
 
 class TaskWindow (QMainWindow , Tasks):
@@ -533,8 +552,55 @@ class TaskWindow (QMainWindow , Tasks):
                 self.MainWindow.data.addTask(self.NameEdit.text() , self.StartedTimedateEdit.date(), self.DeadLinedateEdit.date() , self.ImportanceEdit.text() , MileStone(self.MilestoneEdit.text() ,self.MileStoneDate.date())  , self.PersonsEdit.text())
             self.MainWindow.task()
             self.close()
-    def exi(self):
+
+class MileStonePage (QMainWindow , MileStones):
+    def __init__(self , MainWindow , inde):
+        super(MileStonePage, self).__init__()
+        self.setupUi(self)
+        self.inde = inde
+        self.MainWindow = MainWindow
+        self.MainText.setStyleSheet("color : white ; border : none")
+        self.NameText.setStyleSheet("color : white ; border : none")
+        self.StartedTimeText.setStyleSheet("color : white ; border : none")
+        self.AlertText_1.setStyleSheet("border : none ; color : red")
+        self.AlertText_2.setStyleSheet("border : none ; color : red")
+        ####################################################################################################
+        self.NameEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ;border-radius : 5px ; padding-left : 10px")
+        self.StartedTimedateEdit.setStyleSheet("background-color : #54485b ; color : white ; border : none ; border-radius : 5px ; padding-left : 10px")
+        ####################################################################################################
+        self.AlertText_1.hide()
+        self.AlertText_2.hide()
+        ####################################################################################################
+        self.StartedTimedateEdit.setDisplayFormat("MMMM dd yyyy") 
+        x = datetime.datetime.now()
+        self.StartedTimedateEdit.setDate(QDate(x.year , x.month , x.day))
+        self.StartedTimedateEdit.setCalendarPopup(1)
+        y = QCalendarWidget()
+        y.setStyleSheet("background-color : #54485b ; color : black ; border : none")
+        self.StartedTimedateEdit.setCalendarWidget(y)
+
+        effect1 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#111"))
+        effect2 = QGraphicsDropShadowEffect(offset=QPoint(0, 0), blurRadius=25, color=QColor("#111"))
+        self.SubmitpushButton.setStyleSheet("background-color : #034a21 ; color : white ; border-radius : 10px")
+        self.CanclepushButton.setStyleSheet("background-color : #91070f ; color : white ; border-radius : 10px")
+        self.SubmitpushButton.setGraphicsEffect(effect1)
+        self.CanclepushButton.setGraphicsEffect(effect2)
+        self.CanclepushButton.clicked.connect(self.close)
+        self.SubmitpushButton.clicked.connect(self.submit)
+    def submit(self):
+        flag = 0
+        if(self.NameEdit.text() == "") :
+            self.AlertText_1.show()
+            flag = 1
+        if(self.StartedTimedateEdit.text() == "") :
+            self.AlertText_2.show()
+            flag = 1
+        if (flag == 0):
+            self.MainWindow.data.task[self.inde].milestone.append(MileStone(self.NameEdit.text() , self.StartedTimedateEdit.date()))
+            self.MainWindow.task()
             self.close()
+
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
